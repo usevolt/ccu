@@ -1,0 +1,8 @@
+(sym_lib_table
+  (lib (name esb-rescue)(type Legacy)(uri ${KIPRJMOD}/esb-rescue.lib)(options "")(descr ""))
+  (lib (name kemet)(type Legacy)(uri /home/usevolt/uv/kicad/libs/kemet.lib)(options "")(descr ""))
+  (lib (name usevolt)(type Legacy)(uri /home/usevolt/uv/kicad/libs/usevolt.lib)(options "")(descr ""))
+  (lib (name wurth_elektronik_LED)(type Legacy)(uri /home/usevolt/uv/kicad/libs/wurth_elektronik_LED.lib)(options "")(descr ""))
+  (lib (name power)(type Legacy)(uri /home/usevolt/uv/kicad/libs/power.lib)(options "")(descr ""))
+  (lib (name yageo)(type Legacy)(uri /home/usevolt/uv/kicad/libs/yageo.lib)(options "")(descr ""))
+)

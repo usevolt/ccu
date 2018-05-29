@@ -1,0 +1,394 @@
+EESchema Schematic File Version 4
+LIBS:ccu-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 13 13
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text HLabel 5800 4100 2    60   Output ~ 0
+OUT1
+Text HLabel 5800 4400 2    60   Output ~ 0
+OUT2
+Text HLabel 2550 3450 0    60   Input ~ 0
+IN1
+Text HLabel 2550 4000 0    60   Input ~ 0
+IN2
+Text HLabel 2550 3350 0    60   Output ~ 0
+SENSE
+Wire Wire Line
+	5250 3650 5250 3800
+Wire Wire Line
+	5250 3800 5100 3800
+Wire Wire Line
+	5250 3900 5100 3900
+Connection ~ 5250 3800
+Wire Wire Line
+	5250 4000 5100 4000
+Connection ~ 5250 3900
+Wire Wire Line
+	5100 4100 5250 4100
+Wire Wire Line
+	5100 4200 5250 4200
+Wire Wire Line
+	5250 4200 5250 4100
+Connection ~ 5250 4100
+Wire Wire Line
+	5100 4400 5250 4400
+Wire Wire Line
+	5100 4300 5250 4300
+Wire Wire Line
+	5250 4300 5250 4400
+Connection ~ 5250 4400
+Wire Wire Line
+	2550 3450 2650 3450
+Wire Wire Line
+	2550 4000 2650 4000
+Wire Wire Line
+	2950 4300 4300 4300
+Wire Wire Line
+	3050 3550 2950 3550
+Connection ~ 2950 4300
+Wire Wire Line
+	3350 3550 3500 3550
+Wire Wire Line
+	3500 3200 3500 3350
+Wire Wire Line
+	3500 3350 2550 3350
+Connection ~ 3500 3550
+Wire Wire Line
+	2650 3450 2650 3550
+Connection ~ 2650 3450
+Wire Wire Line
+	2650 4000 2650 4100
+Connection ~ 2650 4000
+Wire Wire Line
+	5700 4650 5700 4400
+Connection ~ 5700 4400
+Wire Wire Line
+	5450 4650 5450 4100
+Connection ~ 5450 4100
+Wire Wire Line
+	5700 5050 5700 4950
+Wire Wire Line
+	5450 5050 5550 5050
+Wire Wire Line
+	5450 5050 5450 4950
+Wire Wire Line
+	5550 5150 5550 5050
+Connection ~ 5550 5050
+Wire Wire Line
+	4300 3900 4150 3900
+Wire Wire Line
+	4150 3550 4150 3900
+Wire Wire Line
+	4300 3450 4300 3800
+Wire Wire Line
+	3050 3850 3050 3550
+Wire Wire Line
+	3350 3850 3350 3550
+Wire Wire Line
+	4150 4100 4300 4100
+Connection ~ 4150 3900
+Connection ~ 3500 3350
+Wire Wire Line
+	3900 3100 3900 3200
+Wire Wire Line
+	3900 3200 3800 3200
+Wire Wire Line
+	5250 3800 5250 3900
+Wire Wire Line
+	5250 3900 5250 4000
+Wire Wire Line
+	5250 4100 5450 4100
+Wire Wire Line
+	5250 4400 5700 4400
+Wire Wire Line
+	2950 4300 2950 4450
+Wire Wire Line
+	3500 3550 4150 3550
+Wire Wire Line
+	2650 3450 4300 3450
+Wire Wire Line
+	2650 4000 4300 4000
+Wire Wire Line
+	5700 4400 5800 4400
+Wire Wire Line
+	5450 4100 5800 4100
+Wire Wire Line
+	5550 5050 5700 5050
+Wire Wire Line
+	4150 3900 4150 4100
+Wire Wire Line
+	3500 3350 3500 3550
+Wire Wire Line
+	2950 3550 2950 4100
+$Comp
+L usevolt:VND5050AJTR-E U601
+U 1 1 5AF37914
+P 4600 4000
+AR Path="/5AF2EB89/5AF37914" Ref="U601"  Part="1" 
+AR Path="/5AF65DC6/5AF37914" Ref="U701"  Part="1" 
+AR Path="/5AF66334/5AF37914" Ref="U802"  Part="1" 
+AR Path="/5AF66EB3/5AF37914" Ref="U901"  Part="1" 
+AR Path="/5AF67112/5AF37914" Ref="U1001"  Part="1" 
+AR Path="/5B0F1C64/5AF37914" Ref="U1201"  Part="1" 
+AR Path="/5B10443F/5AF37914" Ref="U1301"  Part="1" 
+F 0 "U1301" H 4700 4447 60  0000 C CNN
+F 1 "VND5050AJTR-E" H 4700 4341 60  0000 C CNN
+F 2 "usevolt:PowerSSO-12" H 4600 4400 60  0001 C CNN
+F 3 "http://www.st.com/content/ccc/resource/technical/document/datasheet/group2/a5/e5/14/55/09/93/43/94/CD00103333/files/CD00103333.pdf/jcr:content/translations/en.CD00103333.pdf" H 4600 4400 60  0001 C CNN
+F 4 "497-11474-1-ND" H 5000 4800 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 4900 4700 60  0001 C CNN "1st Source"
+F 6 "STMicroelectronics" H 4700 4500 60  0001 C CNN "Manufacturer"
+F 7 "VND5050AJTR-E" H 4800 4600 60  0001 C CNN "Manufacturer Part Number"
+	1    4600 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3V3 #PWR0107
+U 1 1 5AF379DD
+P 3900 3100
+AR Path="/5AF2EB89/5AF379DD" Ref="#PWR0107"  Part="1" 
+AR Path="/5AF65DC6/5AF379DD" Ref="#PWR0111"  Part="1" 
+AR Path="/5AF66334/5AF379DD" Ref="#PWR0115"  Part="1" 
+AR Path="/5AF66EB3/5AF379DD" Ref="#PWR0119"  Part="1" 
+AR Path="/5AF67112/5AF379DD" Ref="#PWR0123"  Part="1" 
+AR Path="/5B0F1C64/5AF379DD" Ref="#PWR01202"  Part="1" 
+AR Path="/5B10443F/5AF379DD" Ref="#PWR01302"  Part="1" 
+F 0 "#PWR01302" H 3900 2950 50  0001 C CNN
+F 1 "+3V3" H 3915 3273 50  0000 C CNN
+F 2 "" H 3900 3100 50  0000 C CNN
+F 3 "" H 3900 3100 50  0000 C CNN
+	1    3900 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L usevolt:DIODE_RS07J-GS18 D601
+U 1 1 5AF37BFE
+P 3700 3200
+AR Path="/5AF2EB89/5AF37BFE" Ref="D601"  Part="1" 
+AR Path="/5AF65DC6/5AF37BFE" Ref="D701"  Part="1" 
+AR Path="/5AF66334/5AF37BFE" Ref="D801"  Part="1" 
+AR Path="/5AF66EB3/5AF37BFE" Ref="D901"  Part="1" 
+AR Path="/5AF67112/5AF37BFE" Ref="D1001"  Part="1" 
+AR Path="/5B0F1C64/5AF37BFE" Ref="D1201"  Part="1" 
+AR Path="/5B10443F/5AF37BFE" Ref="D1301"  Part="1" 
+F 0 "D1301" H 3650 3340 45  0000 C CNN
+F 1 "DIODE_RS07J-GS18" H 3720 3140 45  0001 L BNN
+F 2 "usevolt:DO219AB" H 3730 3350 20  0001 C CNN
+F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 3720 3220 60  0001 C CNN
+F 4 "1864882" H 4320 3820 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digi-Key" H 4020 3520 60  0001 C CNN "1st Source"
+F 6 "Farnell" H 4220 3720 60  0001 C CNN "2nd Source"
+F 7 "RS07J-GS18" H 3920 3420 60  0001 C CNN "Manufacturer Part Number"
+F 8 "RS07J-GS18-ND" H 4120 3620 60  0001 C CNN "1st Source Part Number"
+F 9 "Vishay Semiconductor Diodes Division" H 3820 3320 60  0001 C CNN "Manufacturer"
+	1    3700 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L yageo:1K R601
+U 1 1 5AF37D16
+P 2750 3550
+AR Path="/5AF2EB89/5AF37D16" Ref="R601"  Part="1" 
+AR Path="/5AF65DC6/5AF37D16" Ref="R701"  Part="1" 
+AR Path="/5AF66334/5AF37D16" Ref="R803"  Part="1" 
+AR Path="/5AF66EB3/5AF37D16" Ref="R901"  Part="1" 
+AR Path="/5AF67112/5AF37D16" Ref="R1001"  Part="1" 
+AR Path="/5B0F1C64/5AF37D16" Ref="R1201"  Part="1" 
+AR Path="/5B10443F/5AF37D16" Ref="R1301"  Part="1" 
+F 0 "R1301" H 2800 3734 45  0000 C CNN
+F 1 "1K" H 2800 3650 45  0000 C CNN
+F 2 "yageo:0603" H 2780 3700 20  0001 C CNN
+F 3 "" H 2719 3589 60  0001 C CNN
+F 4 "" H 3119 3989 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 3019 3889 60  0001 C CNN "1st Source"
+F 6 "RC0603FR-071KL" H 2919 3789 60  0001 C CNN "Manufacturer Part Number"
+F 7 "YAGEO" H 2819 3689 60  0001 C CNN "Manufacturer"
+	1    2750 3550
+	1    0    0    -1  
+$EndComp
+Connection ~ 2950 3550
+$Comp
+L yageo:1K R603
+U 1 1 5AF37DEE
+P 3150 3550
+AR Path="/5AF2EB89/5AF37DEE" Ref="R603"  Part="1" 
+AR Path="/5AF65DC6/5AF37DEE" Ref="R703"  Part="1" 
+AR Path="/5AF66334/5AF37DEE" Ref="R805"  Part="1" 
+AR Path="/5AF66EB3/5AF37DEE" Ref="R903"  Part="1" 
+AR Path="/5AF67112/5AF37DEE" Ref="R1003"  Part="1" 
+AR Path="/5B0F1C64/5AF37DEE" Ref="R1203"  Part="1" 
+AR Path="/5B10443F/5AF37DEE" Ref="R1303"  Part="1" 
+F 0 "R1303" H 3200 3734 45  0000 C CNN
+F 1 "1K" H 3200 3650 45  0000 C CNN
+F 2 "yageo:0603" H 3180 3700 20  0001 C CNN
+F 3 "" H 3119 3589 60  0001 C CNN
+F 4 "" H 3519 3989 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 3419 3889 60  0001 C CNN "1st Source"
+F 6 "RC0603FR-071KL" H 3319 3789 60  0001 C CNN "Manufacturer Part Number"
+F 7 "YAGEO" H 3219 3689 60  0001 C CNN "Manufacturer"
+	1    3150 3550
+	1    0    0    -1  
+$EndComp
+Connection ~ 3350 3550
+Connection ~ 3050 3550
+$Comp
+L kemet:4.7uF C601
+U 1 1 5AF37F1E
+P 3150 3850
+AR Path="/5AF2EB89/5AF37F1E" Ref="C601"  Part="1" 
+AR Path="/5AF65DC6/5AF37F1E" Ref="C701"  Part="1" 
+AR Path="/5AF66334/5AF37F1E" Ref="C801"  Part="1" 
+AR Path="/5AF66EB3/5AF37F1E" Ref="C901"  Part="1" 
+AR Path="/5AF67112/5AF37F1E" Ref="C1001"  Part="1" 
+AR Path="/5B0F1C64/5AF37F1E" Ref="C1201"  Part="1" 
+AR Path="/5B10443F/5AF37F1E" Ref="C1301"  Part="1" 
+F 0 "C1301" H 3200 4049 45  0000 C CNN
+F 1 "4.7uF" H 3200 3965 45  0000 C CNN
+F 2 "kemet:0603" H 3180 4000 20  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2062994.pdf?_ga=1.180651367.1948984246.1460023966" H 3054 3859 60  0001 C CNN
+F 4 "1572625" H 3454 4259 60  0001 C CNN "1st Source Part Number"
+F 5 "C0603C475K8PACTU" H 3254 4059 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Farnell" H 3354 4159 60  0001 C CNN "1st Source"
+F 7 "KEMET" H 3154 3959 60  0001 C CNN "Manufacturer"
+	1    3150 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L yageo:1K R602
+U 1 1 5AF38005
+P 2750 4100
+AR Path="/5AF2EB89/5AF38005" Ref="R602"  Part="1" 
+AR Path="/5AF65DC6/5AF38005" Ref="R702"  Part="1" 
+AR Path="/5AF66334/5AF38005" Ref="R804"  Part="1" 
+AR Path="/5AF66EB3/5AF38005" Ref="R902"  Part="1" 
+AR Path="/5AF67112/5AF38005" Ref="R1002"  Part="1" 
+AR Path="/5B0F1C64/5AF38005" Ref="R1202"  Part="1" 
+AR Path="/5B10443F/5AF38005" Ref="R1302"  Part="1" 
+F 0 "R1302" H 2800 4284 45  0000 C CNN
+F 1 "1K" H 2800 4200 45  0000 C CNN
+F 2 "yageo:0603" H 2780 4250 20  0001 C CNN
+F 3 "" H 2719 4139 60  0001 C CNN
+F 4 "" H 3119 4539 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 3019 4439 60  0001 C CNN "1st Source"
+F 6 "RC0603FR-071KL" H 2919 4339 60  0001 C CNN "Manufacturer Part Number"
+F 7 "YAGEO" H 2819 4239 60  0001 C CNN "Manufacturer"
+	1    2750 4100
+	1    0    0    -1  
+$EndComp
+Connection ~ 2950 4100
+Wire Wire Line
+	2950 4100 2950 4300
+$Comp
+L power:GND #PWR0108
+U 1 1 5AF380A6
+P 2950 4450
+AR Path="/5AF2EB89/5AF380A6" Ref="#PWR0108"  Part="1" 
+AR Path="/5AF65DC6/5AF380A6" Ref="#PWR0112"  Part="1" 
+AR Path="/5AF66334/5AF380A6" Ref="#PWR0116"  Part="1" 
+AR Path="/5AF66EB3/5AF380A6" Ref="#PWR0120"  Part="1" 
+AR Path="/5AF67112/5AF380A6" Ref="#PWR0124"  Part="1" 
+AR Path="/5B0F1C64/5AF380A6" Ref="#PWR01201"  Part="1" 
+AR Path="/5B10443F/5AF380A6" Ref="#PWR01301"  Part="1" 
+F 0 "#PWR01301" H 2950 4200 50  0001 C CNN
+F 1 "GND" H 2955 4277 50  0000 C CNN
+F 2 "" H 2950 4450 50  0000 C CNN
+F 3 "" H 2950 4450 50  0000 C CNN
+	1    2950 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L usevolt:DIODE_RS07J-GS18 D602
+U 1 1 5AF38434
+P 5450 4750
+AR Path="/5AF2EB89/5AF38434" Ref="D602"  Part="1" 
+AR Path="/5AF65DC6/5AF38434" Ref="D702"  Part="1" 
+AR Path="/5AF66334/5AF38434" Ref="D802"  Part="1" 
+AR Path="/5AF66EB3/5AF38434" Ref="D902"  Part="1" 
+AR Path="/5AF67112/5AF38434" Ref="D1002"  Part="1" 
+AR Path="/5B0F1C64/5AF38434" Ref="D1202"  Part="1" 
+AR Path="/5B10443F/5AF38434" Ref="D1302"  Part="1" 
+F 0 "D1302" V 5400 4652 45  0000 R CNN
+F 1 "DIODE_RS07J-GS18" H 5470 4690 45  0001 L BNN
+F 2 "usevolt:DO219AB" H 5480 4900 20  0001 C CNN
+F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 5470 4770 60  0001 C CNN
+F 4 "1864882" H 6070 5370 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digi-Key" H 5770 5070 60  0001 C CNN "1st Source"
+F 6 "Farnell" H 5970 5270 60  0001 C CNN "2nd Source"
+F 7 "RS07J-GS18" H 5670 4970 60  0001 C CNN "Manufacturer Part Number"
+F 8 "RS07J-GS18-ND" H 5870 5170 60  0001 C CNN "1st Source Part Number"
+F 9 "Vishay Semiconductor Diodes Division" H 5570 4870 60  0001 C CNN "Manufacturer"
+	1    5450 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L usevolt:DIODE_RS07J-GS18 D603
+U 1 1 5AF384B4
+P 5700 4750
+AR Path="/5AF2EB89/5AF384B4" Ref="D603"  Part="1" 
+AR Path="/5AF65DC6/5AF384B4" Ref="D703"  Part="1" 
+AR Path="/5AF66334/5AF384B4" Ref="D803"  Part="1" 
+AR Path="/5AF66EB3/5AF384B4" Ref="D903"  Part="1" 
+AR Path="/5AF67112/5AF384B4" Ref="D1003"  Part="1" 
+AR Path="/5B0F1C64/5AF384B4" Ref="D1203"  Part="1" 
+AR Path="/5B10443F/5AF384B4" Ref="D1303"  Part="1" 
+F 0 "D1303" V 5650 4652 45  0000 R CNN
+F 1 "DIODE_RS07J-GS18" H 5720 4690 45  0001 L BNN
+F 2 "usevolt:DO219AB" H 5730 4900 20  0001 C CNN
+F 3 "http://www.vishay.com/docs/85742/rs07b.pdf" H 5720 4770 60  0001 C CNN
+F 4 "1864882" H 6320 5370 60  0001 C CNN "2nd Source Part Number"
+F 5 "Digi-Key" H 6020 5070 60  0001 C CNN "1st Source"
+F 6 "Farnell" H 6220 5270 60  0001 C CNN "2nd Source"
+F 7 "RS07J-GS18" H 5920 4970 60  0001 C CNN "Manufacturer Part Number"
+F 8 "RS07J-GS18-ND" H 6120 5170 60  0001 C CNN "1st Source Part Number"
+F 9 "Vishay Semiconductor Diodes Division" H 5820 4870 60  0001 C CNN "Manufacturer"
+	1    5700 4750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR0109
+U 1 1 5AF38539
+P 5550 5150
+AR Path="/5AF2EB89/5AF38539" Ref="#PWR0109"  Part="1" 
+AR Path="/5AF65DC6/5AF38539" Ref="#PWR0113"  Part="1" 
+AR Path="/5AF66334/5AF38539" Ref="#PWR0117"  Part="1" 
+AR Path="/5AF66EB3/5AF38539" Ref="#PWR0121"  Part="1" 
+AR Path="/5AF67112/5AF38539" Ref="#PWR0125"  Part="1" 
+AR Path="/5B0F1C64/5AF38539" Ref="#PWR01204"  Part="1" 
+AR Path="/5B10443F/5AF38539" Ref="#PWR01304"  Part="1" 
+F 0 "#PWR01304" H 5550 4900 50  0001 C CNN
+F 1 "GND" H 5555 4977 50  0000 C CNN
+F 2 "" H 5550 5150 50  0000 C CNN
+F 3 "" H 5550 5150 50  0000 C CNN
+	1    5550 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VDD #PWR0110
+U 1 1 5AF38D40
+P 5250 3650
+AR Path="/5AF2EB89/5AF38D40" Ref="#PWR0110"  Part="1" 
+AR Path="/5AF65DC6/5AF38D40" Ref="#PWR0114"  Part="1" 
+AR Path="/5AF66334/5AF38D40" Ref="#PWR0118"  Part="1" 
+AR Path="/5AF66EB3/5AF38D40" Ref="#PWR0122"  Part="1" 
+AR Path="/5AF67112/5AF38D40" Ref="#PWR0126"  Part="1" 
+AR Path="/5B0F1C64/5AF38D40" Ref="#PWR01203"  Part="1" 
+AR Path="/5B10443F/5AF38D40" Ref="#PWR01303"  Part="1" 
+F 0 "#PWR01303" H 5250 3500 50  0001 C CNN
+F 1 "VDD" H 5267 3823 50  0000 C CNN
+F 2 "" H 5250 3650 50  0000 C CNN
+F 3 "" H 5250 3650 50  0000 C CNN
+	1    5250 3650
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
