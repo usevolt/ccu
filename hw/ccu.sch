@@ -166,147 +166,6 @@ Wire Wire Line
 	2250 2650 2250 2950
 Wire Wire Line
 	2550 2800 3200 2800
-Wire Wire Line
-	2250 2950 2250 3400
-Wire Wire Line
-	2250 3400 1650 3400
-Connection ~ 2250 2950
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 1 1 5AF1AD4B
-P 1550 2650
-F 0 "J102" H 1494 2531 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 2650 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 2800 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 2620 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3220 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3120 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3020 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 2820 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 2920 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 2720 60  0001 C CNN "Manufacturer"
-	1    1550 2650
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 2 1 5AF1AE1D
-P 1550 2800
-F 0 "J102" H 1494 2681 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 2800 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 2950 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 2770 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3370 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3270 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3170 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 2970 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3070 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 2870 60  0001 C CNN "Manufacturer"
-	2    1550 2800
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 3 1 5AF1AEC6
-P 1550 2950
-F 0 "J102" H 1494 2831 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 2950 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3100 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 2920 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3520 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3420 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3320 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3120 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3220 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3020 60  0001 C CNN "Manufacturer"
-	3    1550 2950
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 4 1 5AF1AF74
-P 1550 3100
-F 0 "J102" H 1494 2981 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 3100 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3250 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 3070 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3670 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3570 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3470 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3270 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3370 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3170 60  0001 C CNN "Manufacturer"
-	4    1550 3100
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 5 1 5AF1B027
-P 1550 3250
-F 0 "J102" H 1494 3131 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 3250 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3400 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 3220 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3820 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3720 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3620 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3420 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3520 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3320 60  0001 C CNN "Manufacturer"
-	5    1550 3250
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 6 1 5AF1B0DF
-P 1550 3400
-F 0 "J102" H 1494 3281 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 3400 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3550 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 3370 60  0001 C CNN
-F 4 "A106572-ND" H 2250 3970 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 3870 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3770 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3570 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3670 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3470 60  0001 C CNN "Manufacturer"
-	6    1550 3400
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 7 1 5AF1B19C
-P 1550 3550
-F 0 "J102" H 1494 3431 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 3550 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3700 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 3520 60  0001 C CNN
-F 4 "A106572-ND" H 2250 4120 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 4020 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 3920 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3720 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3820 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3620 60  0001 C CNN "Manufacturer"
-	7    1550 3550
-	-1   0    0    1   
-$EndComp
-$Comp
-L usevolt:AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1 J102
-U 8 1 5AF1B25E
-P 1550 3700
-F 0 "J102" H 1494 3581 45  0000 C CNN
-F 1 "AMPSEAL_8_POS_VERT_BLACK_SEALED_1-776276-1" H 1650 3700 45  0001 L BNN
-F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3850 20  0001 C CNN
-F 3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=776276&DocType=Customer+Drawing&DocLang=English" H 1650 3670 60  0001 C CNN
-F 4 "A106572-ND" H 2250 4270 60  0001 C CNN "2nd Source Part Number"
-F 5 "Digikey" H 2150 4170 60  0001 C CNN "2nd Source"
-F 6 "571-1-776276-1" H 2050 4070 60  0001 C CNN "1st Source Part Number"
-F 7 "1-776276-1" H 1850 3870 60  0001 C CNN "Manufacturer Part Number"
-F 8 "Mouser" H 1950 3970 60  0001 C CNN "1st Source"
-F 9 "TE Connectivity" H 1750 3770 60  0001 C CNN "Manufacturer"
-	8    1550 3700
-	-1   0    0    1   
-$EndComp
 $Comp
 L usevolt:AMPSEAL_23_POS_VERT_GRAY_SEALED_1-776228-4 J101
 U 1 1 5AF1B9EC
@@ -980,4 +839,124 @@ Wire Wire Line
 	14300 7750 13550 7750
 Wire Wire Line
 	13550 7550 14300 7550
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 1 1 5B3A0097
+P 1550 2650
+F 0 "J102" H 1494 2567 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 2650 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 2800 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 2620 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3020 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 2820 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 2920 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 2720 60  0001 C CNN "Manufacturer"
+	1    1550 2650
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 2 1 5B3A017F
+P 1550 2800
+F 0 "J102" H 1494 2717 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 2800 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 2950 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 2770 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3170 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 2970 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3070 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 2870 60  0001 C CNN "Manufacturer"
+	2    1550 2800
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 3 1 5B3A0274
+P 1550 2950
+F 0 "J102" H 1494 2867 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 2950 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3100 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 2920 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3320 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3120 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3220 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3020 60  0001 C CNN "Manufacturer"
+	3    1550 2950
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 4 1 5B3A0366
+P 1550 3100
+F 0 "J102" H 1494 3017 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 3100 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3250 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 3070 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3470 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3270 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3370 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3170 60  0001 C CNN "Manufacturer"
+	4    1550 3100
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 5 1 5B3A045D
+P 1550 3250
+F 0 "J102" H 1494 3167 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 3250 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3400 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 3220 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3620 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3420 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3520 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3320 60  0001 C CNN "Manufacturer"
+	5    1550 3250
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 6 1 5B3A0559
+P 1550 3400
+F 0 "J102" H 1494 3317 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 3400 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3550 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 3370 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3770 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3570 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3670 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3470 60  0001 C CNN "Manufacturer"
+	6    1550 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 7 1 5B3A065A
+P 1550 3550
+F 0 "J102" H 1494 3467 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 3550 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3700 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 3520 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 3920 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3720 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3820 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3620 60  0001 C CNN "Manufacturer"
+	7    1550 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L usevolt:AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2 J102
+U 8 1 5B3A077F
+P 1550 3700
+F 0 "J102" H 1494 3617 45  0000 C CNN
+F 1 "AMPSEAL_8_POS_VERT_WHITE_SEALED_1-776276-2" H 1550 3700 45  0001 L BNN
+F 2 "usevolt:AMPSEAL_8_POS_776275-1" H 1580 3850 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/418/NG_CD_776276_B9-763219.pdf" H 1650 3670 60  0001 C CNN
+F 4 "571-1-776276-2" H 2050 4070 60  0001 C CNN "1st Source Part Number"
+F 5 "1-776276-2" H 1850 3870 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Mouser" H 1950 3970 60  0001 C CNN "1st Source"
+F 7 "TE Connectivity" H 1750 3770 60  0001 C CNN "Manufacturer"
+	8    1550 3700
+	-1   0    0    1   
+$EndComp
 $EndSCHEMATC

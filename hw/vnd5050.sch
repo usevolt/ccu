@@ -154,10 +154,10 @@ F 7 "VND5050AJTR-E" H 4800 4600 60  0001 C CNN "Manufacturer Part Number"
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+3V3 #PWR0107
+L power:+3V3 #PWR0127
 U 1 1 5AF379DD
 P 3900 3100
-AR Path="/5AF2EB89/5AF379DD" Ref="#PWR0107"  Part="1" 
+AR Path="/5AF2EB89/5AF379DD" Ref="#PWR0127"  Part="1" 
 AR Path="/5AF65DC6/5AF379DD" Ref="#PWR0111"  Part="1" 
 AR Path="/5AF66334/5AF379DD" Ref="#PWR0115"  Part="1" 
 AR Path="/5AF66EB3/5AF379DD" Ref="#PWR0119"  Part="1" 
@@ -290,10 +290,10 @@ Connection ~ 2950 4100
 Wire Wire Line
 	2950 4100 2950 4300
 $Comp
-L power:GND #PWR0108
+L power:GND #PWR0128
 U 1 1 5AF380A6
 P 2950 4450
-AR Path="/5AF2EB89/5AF380A6" Ref="#PWR0108"  Part="1" 
+AR Path="/5AF2EB89/5AF380A6" Ref="#PWR0128"  Part="1" 
 AR Path="/5AF65DC6/5AF380A6" Ref="#PWR0112"  Part="1" 
 AR Path="/5AF66334/5AF380A6" Ref="#PWR0116"  Part="1" 
 AR Path="/5AF66EB3/5AF380A6" Ref="#PWR0120"  Part="1" 
@@ -356,10 +356,10 @@ F 9 "Vishay Semiconductor Diodes Division" H 5820 4870 60  0001 C CNN "Manufactu
 	0    -1   -1   0   
 $EndComp
 $Comp
-L power:GND #PWR0109
+L power:GND #PWR0129
 U 1 1 5AF38539
 P 5550 5150
-AR Path="/5AF2EB89/5AF38539" Ref="#PWR0109"  Part="1" 
+AR Path="/5AF2EB89/5AF38539" Ref="#PWR0129"  Part="1" 
 AR Path="/5AF65DC6/5AF38539" Ref="#PWR0113"  Part="1" 
 AR Path="/5AF66334/5AF38539" Ref="#PWR0117"  Part="1" 
 AR Path="/5AF66EB3/5AF38539" Ref="#PWR0121"  Part="1" 

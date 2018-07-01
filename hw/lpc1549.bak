@@ -620,12 +620,12 @@ Wire Wire Line
 Text HLabel 4700 2150 0    60   Input ~ 0
 OUT4_SENSE
 Wire Wire Line
-	7000 2050 7500 2050
-Wire Wire Line
 	7000 2150 7500 2150
-Text HLabel 7500 2050 2    60   Output ~ 0
-OUT5_1
+Wire Wire Line
+	7000 2050 7500 2050
 Text HLabel 7500 2150 2    60   Output ~ 0
+OUT5_1
+Text HLabel 7500 2050 2    60   Output ~ 0
 OUT5_2
 Wire Wire Line
 	5200 5750 4700 5750
@@ -644,16 +644,16 @@ Wire Wire Line
 Text HLabel 7500 4950 2    60   Output ~ 0
 OUT8
 Wire Wire Line
-	7000 2350 7500 2350
-Text HLabel 7500 2350 2    60   Input ~ 0
+	7000 2450 7500 2450
+Text HLabel 7500 2450 2    60   Input ~ 0
 OUT8_SENSE
 Wire Wire Line
-	7000 5750 7500 5750
-Wire Wire Line
 	7000 5650 7500 5650
-Text HLabel 7500 5750 2    60   Output ~ 0
-OUT6_1
+Wire Wire Line
+	7000 5750 7500 5750
 Text HLabel 7500 5650 2    60   Output ~ 0
+OUT6_1
+Text HLabel 7500 5750 2    60   Output ~ 0
 OUT6_2
 Wire Wire Line
 	7000 1950 7500 1950
@@ -668,7 +668,7 @@ OUT7_1
 Text HLabel 7500 5550 2    60   Output ~ 0
 OUT7_2
 Wire Wire Line
-	7000 2450 7500 2450
-Text HLabel 7500 2450 2    60   Input ~ 0
+	7000 2350 7500 2350
+Text HLabel 7500 2350 2    60   Input ~ 0
 OUT7_SENSE
 $EndSCHEMATC
