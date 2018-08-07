@@ -16,23 +16,27 @@
 */
 
 
-#ifndef INC_OUT_MAPPINGS_H_
-#define INC_OUT_MAPPINGS_H_
+#ifndef UW_CAN_CAN_PEDAL_H_
+#define UW_CAN_CAN_PEDAL_H_
 
 
-#include "main.h"
-
-/// @file: Defines the solenoid valve mappings for Usewood FM, CM and LM
-
-#define VALVE_BR	dev.pout[0]
-#define VALVE_BL	dev.pout[1]
-#define VALVE_BF	dev.pout[2]
-#define VALVE_IMPL2	dev.pout[3]
-#define VALVE_BT	dev.pout[4]
-#define VALVE_LF	dev.pout[5]
-#define VALVE_RF	dev.pout[6]
-#define VALVE_ROT	dev.pout[7]
-#define VALVE_IMPL1	dev.pout[8]
 
 
-#endif /* INC_OUT_MAPPINGS_H_ */
+#include <stdint.h>
+
+
+
+
+
+
+#define PEDAL_NODE_ID					0x1E
+
+
+
+
+// PEDAL OBJECT DICTIONARY ENTRIES
+
+
+
+
+#endif /* UW_CAN_CAN_PEDAL_H_ */

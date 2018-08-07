@@ -49,6 +49,10 @@ typedef enum {
 	FSB_EMCY_UI_OVERCURRENT,
 	// UI fault
 	FSB_EMCY_UI_FAULT,
+	// fuel level warning
+	FSB_EMCY_FUEL_LEVEL_WARNING,
+	// fuel level fault
+	FSB_EMCY_FUEL_LEVEL_FAULT,
 
 	FSB_EMCY_COUNT
 } fsb_emcy_e;
@@ -169,6 +173,10 @@ typedef uint8_t fsb_ignkey_states_e;
 #define FSB_SEATSW_TYPE							CANOPEN_UNSIGNED8
 #define FSB_SEATSW_PERMISSIONS					CANOPEN_RO
 
+#define FSB_FUEL_LEVEL_INDEX					0x2217
+#define FSB_FUEL_LEVEL_SUBINDEX					0
+#define FSB_FUEL_LEVEL_TYPE						CANOPEN_UNSIGNED8
+#define FSB_FUEL_LEVEL_PERMISSIONS				CANOPEN_RO
 
 
 

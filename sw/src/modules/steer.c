@@ -16,37 +16,42 @@
 */
 
 
-#include "boom_lift.h"
+
+
+
+#include "steer.h"
+#include "can_ccu.h"
 #include "main.h"
 #include "pin_mappings.h"
 
 
-void boom_lift_conf_reset(boom_lift_conf_st *this) {
-
+void steer_conf_reset(steer_conf_st *this) {
+	this->out_conf.acc = DUAL_SOLENOID_ACC_MAX;
+	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
+	this->out_conf.invert = true;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
 
 
-
-
-void boom_lift_init(boom_lift_st *this, boom_lift_conf_st *conf_ptr) {
+void steer_init(steer_st *this, steer_conf_st *conf_ptr) {
 	input_init(&this->input);
 	this->conf = conf_ptr;
 
-	uv_dual_solenoid_output_init(&this->out, BOOM_LIFT_PWMA,
-			BOOM_LIFT_PWMB, BOOM_LIFT_SENSE, dev.dither_freq, dev.dither_ampl,
+	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, STEER_PWMA,
+			STEER_PWMB, STEER_SENSE, dev.dither_freq, dev.dither_ampl,
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
-			HCU_EMCY_BOOM_LIFT_OVERLOAD_A, HCU_EMCY_BOOM_LIFT_OVERLOAD_B,
-			HCU_EMCY_BOOM_LIFT_FAULT_A, HCU_EMCY_BOOM_LIFT_FAULT_B);
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
+			CCU_EMCY_STEER_OVERLOAD_A, CCU_EMCY_STEER_OVERLOAD_B,
+			CCU_EMCY_STEER_FAULT_A, CCU_EMCY_STEER_FAULT_B);
 }
 
 
-void boom_lift_step(boom_lift_st *this, uint16_t step_ms) {
-
+void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
-
-	uv_dual_solenoid_output_set_conf(&this->out, &this->conf->out_conf);
 
 	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
 
 }
+

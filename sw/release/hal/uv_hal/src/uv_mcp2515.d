@@ -1,7 +1,9 @@
-release/src/pin_mappings.o: src/pin_mappings.c inc/pin_mappings.h \
- hal/uv_hal/inc/uv_gpio.h inc/uv_hal_config.h uw_can/can_esb.h \
- uw_can/can_fsb.h uw_can/can_csb.h uw_can/can_hcu.h uw_can/can_keypad.h \
- hal/uv_hal/inc/uv_errors.h hal/lpc_chip_15xx/inc/chip.h \
+release/hal/uv_hal/src/uv_mcp2515.o: hal/uv_hal/src/uv_mcp2515.c \
+ hal/uv_hal/inc/uv_mcp2515.h inc/uv_hal_config.h uw_can/can_esb.h \
+ uw_can/can_fsb.h uw_can/can_csb.h uw_can/can_ccu.h uw_can/can_keypad.h \
+ uw_can/can_pedal.h hal/uv_hal/inc/uv_spi.h hal/uv_hal/inc/uv_utilities.h \
+ hal/uv_hal/inc/uv_can.h hal/uv_hal/inc/uv_errors.h \
+ hal/uv_hal/inc/uv_gpio.h hal/lpc_chip_15xx/inc/chip.h \
  hal/lpc_chip_15xx/inc/lpc_types.h hal/lpc_chip_15xx/inc/sys_config.h \
  hal/lpc_chip_15xx/inc/cmsis.h hal/lpc_chip_15xx/inc/core_cm3.h \
  hal/lpc_chip_15xx/inc/core_cmInstr.h hal/lpc_chip_15xx/inc/core_cmFunc.h \
@@ -31,6 +33,12 @@ release/src/pin_mappings.o: src/pin_mappings.c inc/pin_mappings.h \
  hal/lpc_chip_15xx/inc/i2c_common_15xx.h \
  hal/lpc_chip_15xx/inc/i2cs_15xx.h hal/lpc_chip_15xx/inc/gpio_15xx.h \
  hal/uv_hal/inc/uv_gpio_lpc1549.h hal/uv_hal/inc/uv_utilities.h \
- hal/uv_hal/inc/uv_can.h hal/uv_hal/inc/uv_gpio.h \
- hal/uv_hal/inc/uv_timer.h hal/uv_hal/inc/uv_adc.h \
- hal/uv_hal/inc/uv_pwm.h hal/uv_hal/inc/uv_utilities.h
+ hal/uv_hal/inc/uv_rtos.h hal/uv_hal/freertos/include/FreeRTOS.h \
+ hal/uv_hal/inc/FreeRTOSConfig.h hal/uv_hal/freertos/include/projdefs.h \
+ hal/uv_hal/freertos/include/portable.h \
+ hal/uv_hal/freertos/include/deprecated_definitions.h \
+ hal/uv_hal/freertos/portable/GCC/ARM_CM3/portmacro.h \
+ hal/uv_hal/freertos/include/mpu_wrappers.h \
+ hal/uv_hal/freertos/include/task.h hal/uv_hal/freertos/include/list.h \
+ hal/uv_hal/freertos/include/semphr.h hal/uv_hal/freertos/include/queue.h \
+ hal/uv_hal/inc/uv_rtos.h

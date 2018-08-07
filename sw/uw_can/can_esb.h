@@ -60,12 +60,6 @@ typedef enum {
 	ESB_EMCY_OLEVEL_ERROR,
 	// oil level sensor misfunction
 	ESB_EMCY_OLEVEL_SENSOR_FAULT,
-	// fuel level low
-	ESB_EMCY_FLEVEL_WARNING,
-	// fuel level critically low
-	ESB_EMCY_FLEVEL_ERROR,
-	// fuel level sensor misfunction
-	ESB_EMCY_FLEVEL_FAULT,
 	// VDD is critically low
 	ESB_EMCY_VDD_LOW_WARNING,
 	// Engine stop solenoid misfunctioned. Could be a mistake in recognizing
@@ -214,11 +208,6 @@ typedef enum {
 #define ESB_OIL_LEVEL_TYPE						CANOPEN_UNSIGNED8
 #define ESB_OIL_LEVEL_PERMISSIONS				CANOPEN_RO
 
-#define ESB_FUEL_LEVEL_INDEX					0x2270
-#define ESB_FUEL_LEVEL_SUBINDEX					0
-#define ESB_FUEL_LEVEL_TYPE						CANOPEN_UNSIGNED8
-#define ESB_FUEL_LEVEL_PERMISSIONS				CANOPEN_RO
-
 #define ESB_VDD_INDEX							0x2280
 #define ESB_VDD_SUBINDEX						0
 #define ESB_VDD_TYPE							CANOPEN_UNSIGNED16
@@ -250,6 +239,11 @@ typedef enum {
 #define ESB_PUMP_ANGLE_SUBINDEX					0
 #define ESB_PUMP_ANGLE_TYPE						CANOPEN_UNSIGNED16
 #define ESB_PUMP_ANGLE_PERMISSIONS				CANOPEN_RO
+
+#define ESB_ENGINE_POWER_ENABLE_INDEX			0x2304
+#define ESB_ENGINE_POWER_ENABLE_SUBINDEX		0
+#define ESB_ENGINE_POWER_ENABLE_TYPE			CANOPEN_UNSIGNED8
+#define ESB_ENGINE_POWER_ENABLE_PERMISSIONS		CANOPEN_RW
 
 
 

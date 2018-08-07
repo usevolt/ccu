@@ -1,7 +1,7 @@
 release/hal/uv_hal/src/uv_adc.o: hal/uv_hal/src/uv_adc.c \
  hal/uv_hal/inc/uv_adc.h inc/uv_hal_config.h uw_can/can_esb.h \
- uw_can/can_fsb.h uw_can/can_csb.h uw_can/can_hcu.h uw_can/can_keypad.h \
- hal/uv_hal/inc/uv_errors.h hal/uv_hal/inc/uv_uart.h \
+ uw_can/can_fsb.h uw_can/can_csb.h uw_can/can_ccu.h uw_can/can_keypad.h \
+ uw_can/can_pedal.h hal/uv_hal/inc/uv_errors.h hal/uv_hal/inc/uv_uart.h \
  hal/uv_hal/inc/uv_stdout.h hal/lpc_chip_15xx/inc/chip.h \
  hal/lpc_chip_15xx/inc/lpc_types.h hal/lpc_chip_15xx/inc/sys_config.h \
  hal/lpc_chip_15xx/inc/cmsis.h hal/lpc_chip_15xx/inc/core_cm3.h \

@@ -24,6 +24,21 @@ static bool initialized = false;
 
 
 
+void gpio_callback(uv_gpios_e gpio);
+void can1_callback(void *user_ptr, uv_can_message_st* msg);
+
+
+void gpio_callback(uv_gpios_e gpio) {
+	uv_mcp2515_int(&this->mcp2515);
+}
+
+void can1_callback(void *user_ptr, uv_can_message_st* msg) {
+	// forward CAN1 messages to CAN2
+	uv_mcp2515_send(&this->mcp2515, msg);
+	printf("!");
+}
+
+
 
 void init(dev_st* me) {
 	// load non-volatile data
@@ -32,7 +47,9 @@ void init(dev_st* me) {
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
 
-		boom_rotate_conf_reset(&this->boom_rotate_conf);
+		steer_conf_reset(&this->steer_conf);
+		drive_conf_reset(&this->drive_conf);
+
 
 		// initialize non-volatile memory to default settings
 		uv_memory_save();
@@ -41,14 +58,31 @@ void init(dev_st* me) {
 
 	this->total_current = 0;
 
-	boom_rotate_init(&this->boom_rotate, &this->boom_rotate_conf);
-	boom_lift_init(&this->boom_lift, &this->boom_lift_conf);
-	boom_fold_init(&this->boom_fold, &this->boom_fold_conf);
+	this->fsb.door_sw1 = 0;
+	this->fsb.door_sw2 = 0;
+	this->fsb.seat_sw = 0;
+	this->fsb.emcy = 0;
+	this->fsb.ignkey_state = FSB_IGNKEY_STATE_OFF;
+
+	steer_init(&this->steer, &this->steer_conf);
+	drive_init(&this->drive, &this->drive_conf);
+
+	pedal_init(&this->pedal);
 
 	uv_terminal_init(terminal_commands, commands_size());
 
 	uv_canopen_set_state(CANOPEN_OPERATIONAL);
 
+	uv_gpio_interrupt_init(&gpio_callback);
+
+	uv_gpio_init_output(MCP2515_RESET, true);
+
+	uv_mcp2515_init(&this->mcp2515, SPI0, SPI_SLAVE0, MCP2515_INT, uv_memory_get_can_baudrate());
+
+	uv_output_init(&this->boom_vdd, BOOM_VDD_SENSE, BOOM_VDD_OUT, VN5E01_CURRENT_AMPL_UA,
+			BOOM_VDD_MAX_CURRENT, BOOM_VDD_FAULT_CURRENT, BOOM_VDD_AVG_COUNT,
+			CCU_EMCY_BOOM_VDD_OVERLOAD, CCU_EMCY_BOOM_VDD_FAULT);
+	uv_output_set(&this->boom_vdd, OUTPUT_STATE_ON);
 
 	initialized = true;
 }
@@ -65,14 +99,30 @@ void solenoid_step(void* me) {
 	while (true) {
 		uint32_t step_ms = 2;
 
-		boom_rotate_solenoid_step(&this->boom_rotate, step_ms);
-		boom_lift_solenoid_step(&this->boom_lift, step_ms);
-		boom_fold_solenoid_step(&this->boom_fold, step_ms);
+		steer_solenoid_step(&this->steer, step_ms);
+		drive_solenoid_step(&this->drive, step_ms);
 
 		uv_rtos_task_delay(step_ms);
 	}
 }
 
+void mcp2515_step(void *me) {
+	while (!initialized) {
+		uv_rtos_task_delay(1);
+	}
+
+	while (true) {
+		uint32_t step_ms = 2;
+
+		uv_can_msg_st msg;
+		// forward messages from CAN2 to CAN1
+		while (uv_mcp2515_receive(&this->mcp2515, &msg) == ERR_NONE) {
+			uv_can_send(CONFIG_CANOPEN_CHANNEL, &msg);
+		}
+
+		uv_rtos_task_delay(step_ms);
+	}
+}
 
 void step(void* me) {
 
@@ -86,38 +136,44 @@ void step(void* me) {
 		// terminal step function
 		uv_terminal_step();
 
+		this->total_current = 0;
 
-		this->total_current = abs(boom_rotate_get_current(&this->boom_rotate)) +
-				abs(boom_lift_get_current(&this->boom_lift)) +
-				abs(boom_fold_get_current(&this->boom_fold));
+		pedal_step(&this->pedal);
 
+		steer_step(&this->steer, step_ms);
+		drive_step(&this->drive, step_ms);
 
-		boom_rotate_step(&this->boom_rotate, step_ms);
-		boom_lift_step(&this->boom_lift, step_ms);
-		boom_fold_step(&this->boom_fold, step_ms);
-
+		uv_output_set_state(&this->boom_vdd, OUTPUT_STATE_ON);
+		uv_output_step(&this->boom_vdd, step_ms);
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero
 		if (uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID)) {
 		}
 		if (uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID)) {
 		}
+		if (uv_canopen_heartbeat_producer_is_expired(PEDAL_NODE_ID)) {
+			pedal_set_lost(&this->pedal, true);
+		}
+		else {
+			pedal_set_lost(&this->pedal, false);
+		}
 
 		// outputs are disables if FSB is not found, ignition key is not in ON state,
 		// or emergency switch is pressed
 		if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
 				(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
-				this->fsb.emcy) {
+				this->fsb.emcy ||
+				!this->fsb.seat_sw) {
 			// disable all outputs
-			boom_rotate_disable(&this->boom_rotate);
-			boom_lift_disable(&this->boom_lift);
-			boom_fold_disable(&this->boom_fold);
+			steer_disable(&this->steer);
+			drive_disable(&this->drive);
+			uv_output_disable(&this->boom_vdd);
 		}
 		else {
 			// enable outputs
-			boom_rotate_enable(&this->boom_rotate);
-			boom_lift_disable(&this->boom_lift);
-			boom_fold_disable(&this->boom_fold);
+			steer_enable(&this->steer);
+			drive_enable(&this->drive);
+			uv_output_enable(&this->boom_vdd);
 		}
 
 		uv_rtos_task_delay(step_ms);

@@ -24,7 +24,7 @@ O := Og
 BUILDDIR := release
 
 # Name of the produced binary firmware
-BINARY := hcu
+BINARY := ccu
 
 # List of include directories
 INCLUDEDIRS := 	-I"inc/" \
