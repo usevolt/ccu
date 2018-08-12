@@ -33,6 +33,8 @@ typedef struct {
 void drive_conf_reset(drive_conf_st *this);
 
 
+#define DRIVE_FOOT_DOWN_DELAY_MS		1000
+
 typedef struct {
 	// input module from the CAN-bus
 	input_st input;
@@ -43,8 +45,11 @@ typedef struct {
 	// output for all other gears
 	uv_dual_solenoid_output_st out2;
 
-	// variable to hold the summed output current
-	int16_t out_current;
+	// inhibit delay for sending emcy messages when driving foot down
+	uv_delay_st foot_down_emcy_delay;
+
+	// output for brake
+	uv_output_st brake;
 
 	ccu_gear_e gear;
 
@@ -61,8 +66,12 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr);
 void drive_step(drive_st *this, uint16_t step_ms);
 
 
-static inline int16_t drive_get_current(drive_st *this) {
-	return this->out_current;
+static inline int16_t drive_get_current1(drive_st *this) {
+	return uv_dual_solenoid_output_get_current(&this->out1);
+}
+
+static inline int16_t drive_get_current2(drive_st *this) {
+	return uv_dual_solenoid_output_get_current(&this->out2);
 }
 
 /// @brief: Step function for the solenoid driver module. Should be called
@@ -70,9 +79,13 @@ static inline int16_t drive_get_current(drive_st *this) {
 static inline void drive_solenoid_step(drive_st *this, uint16_t step_ms) {
 	uv_dual_solenoid_output_step(&this->out1, step_ms);
 	uv_dual_solenoid_output_step(&this->out2, step_ms);
+	uv_output_step(&this->brake, step_ms);
 }
 
 
+static inline void drive_set_request(drive_st *this, int8_t value) {
+	this->input.request = value;
+}
 
 
 /// @brief: Disables the boom fold module

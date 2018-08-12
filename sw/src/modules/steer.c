@@ -23,14 +23,15 @@
 #include "can_ccu.h"
 #include "main.h"
 #include "pin_mappings.h"
+#include "drive.h"
 
 
 void steer_conf_reset(steer_conf_st *this) {
 	this->out_conf.acc = DUAL_SOLENOID_ACC_MAX;
 	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
-	this->out_conf.invert = true;
+	this->out_conf.invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
 }
@@ -51,7 +52,11 @@ void steer_init(steer_st *this, steer_conf_st *conf_ptr) {
 void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out, input_get_request(&this->input));
+	// steering enabled only when driving
+	uv_dual_solenoid_output_set(&this->out,
+			(drive_get_current1(&dev.drive) ||
+					drive_get_current2(&dev.drive)) ?
+							input_get_request(&this->input) : 0);
 
 }
 

@@ -1,6 +1,6 @@
 release/hal/lpc_chip_15xx/src/iap.o: hal/lpc_chip_15xx/src/iap.c \
  inc/uv_hal_config.h uw_can/can_esb.h uw_can/can_fsb.h uw_can/can_csb.h \
- uw_can/can_ccu.h uw_can/can_keypad.h uw_can/can_pedal.h \
+ uw_can/can_ccu.h uw_can/can_hcu.h uw_can/can_keypad.h uw_can/can_pedal.h \
  hal/lpc_chip_15xx/inc/chip.h hal/lpc_chip_15xx/inc/lpc_types.h \
  hal/lpc_chip_15xx/inc/sys_config.h hal/lpc_chip_15xx/inc/cmsis.h \
  hal/lpc_chip_15xx/inc/core_cm3.h hal/lpc_chip_15xx/inc/core_cmInstr.h \

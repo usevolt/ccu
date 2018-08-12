@@ -24,12 +24,15 @@
 
 
 
+// raw adc values for fault limits
 #define PEDAL_HAL_DEF				0x8000
-#define PEDAL_MIDDLE_OFFSET			0x1000
 #define PEDAL_FAULT_MIN				0x2000
 #define PEDAL_FAULT_MAX				0xF000
-#define PEDAL_VALUE_MIN				0x1A00
-#define PEDAL_VALUE_MAX				0xE500
+
+
+// values for hal sensor delta (hal2 - hal1)
+#define PEDAL_MIDDLE_OFFSET			0x2000
+#define PEDAL_VALUE_MAX				0xCD00
 #define MOVING_AVG_COUNT			100
 #define PEDAL_HYSTERESIS			0x1000
 
@@ -64,15 +67,36 @@ void pedal_step(pedal_st *this) {
 				this->state = PEDAL_STATE_FAULT;
 				break;
 			}
+		}
+		if (this->state == PEDAL_STATE_OK) {
+
 			int32_t rel;
-			if (this->hal[i] > PEDAL_HAL_DEF + PEDAL_MIDDLE_OFFSET / 2) {
-				rel = uv_reli(this->hal[i], PEDAL_HAL_DEF + PEDAL_MIDDLE_OFFSET / 2, PEDAL_VALUE_MAX);
+			int32_t hal = this->hal[1] - this->hal[0];
+
+			if (hal > PEDAL_MIDDLE_OFFSET / 2) {
+				rel = uv_reli(hal, PEDAL_MIDDLE_OFFSET / 2, PEDAL_VALUE_MAX);
+				if (rel < 0) {
+					rel = 0;
+				}
+				else if (rel > 1000) {
+					rel = 1000;
+				}
+				else {
+				}
 				rel = rel * rel / 1000;
 				rel = 500 + rel / 2;
 			}
-			else if (this->hal[i] < PEDAL_HAL_DEF - PEDAL_MIDDLE_OFFSET / 2) {
-				rel = uv_reli(this->hal[i], PEDAL_VALUE_MIN, PEDAL_HAL_DEF - PEDAL_MIDDLE_OFFSET / 2);
-				rel = rel * rel / 1000;
+			else if (hal < - PEDAL_MIDDLE_OFFSET / 2) {
+				rel = uv_reli(hal, - PEDAL_MIDDLE_OFFSET / 2, - PEDAL_VALUE_MAX);
+				if (rel < 0) {
+					rel = 0;
+				}
+				else if (rel > 1000) {
+					rel = 1000;
+				}
+				else {
+				}
+				rel = 1000 - (rel * rel / 1000);
 				rel = rel / 2;
 			}
 			else {
@@ -87,13 +111,12 @@ void pedal_step(pedal_st *this) {
 			else {
 
 			}
-			this->req[i] = uv_lerpi(rel, INT8_MIN, INT8_MAX);
-
-
+			this->request = uv_lerpi(rel, INT8_MIN, INT8_MAX);
+		}
+		else {
+			this->request = 0;
 		}
 
-		// choose the value which is closer to zero
-		this->request = (abs(this->req[0]) < abs(this->req[1])) ? this->req[0] : this->req[1];
 	}
 }
 

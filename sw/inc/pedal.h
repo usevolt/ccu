@@ -56,8 +56,8 @@ static inline void pedal_set_lost(pedal_st *this, bool value) {
 		this->state = PEDAL_STATE_LOST;
 	}
 	else {
-		if (this->state == PEDAL_STATE_OK) {
-			this->state = PEDAL_STATE_LOST;
+		if (this->state == PEDAL_STATE_LOST) {
+			this->state = PEDAL_STATE_OK;
 		}
 	}
 }

@@ -69,11 +69,25 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->drive_conf
 		},
 		{
-				.main_index = CCU_DRIVE_CURRENT_INDEX,
-				.sub_index = CCU_DRIVE_CURRENT_SUBINDEX,
-				.type = CCU_DRIVE_CURRENT_TYPE,
-				.permissions = CCU_DRIVE_CURRENT_PERMISSIONS,
-				.data_ptr = &this->drive.out_current
+				.main_index = CCU_DRIVE_CURRENT1_INDEX,
+				.sub_index = CCU_DRIVE_CURRENT1_SUBINDEX,
+				.type = CCU_DRIVE_CURRENT1_TYPE,
+				.permissions = CCU_DRIVE_CURRENT1_PERMISSIONS,
+				.data_ptr = &this->drive.out1.current_ma
+		},
+		{
+				.main_index = CCU_DRIVE_CURRENT2_INDEX,
+				.sub_index = CCU_DRIVE_CURRENT2_SUBINDEX,
+				.type = CCU_DRIVE_CURRENT2_TYPE,
+				.permissions = CCU_DRIVE_CURRENT2_PERMISSIONS,
+				.data_ptr = &this->drive.out2.current_ma
+		},
+		{
+				.main_index = CCU_GEAR_INDEX,
+				.sub_index = CCU_GEAR_SUBINDEX,
+				.type = CCU_GEAR_TYPE,
+				.permissions = CCU_GEAR_PERMISSIONS,
+				.data_ptr = &this->drive.gear
 		},
 
 
@@ -118,6 +132,20 @@ canopen_object_st obj_dict[] = {
 				.type = CCU_PEDAL_RAW_TYPE,
 				.permissions = CCU_PEDAL_RAW_PERMISSIONS,
 				.data_ptr = &this->pedal.hal[0]
+		},
+		{
+				.main_index = CCU_HCU_INDEX_OFFSET + HCU_LEFT_FOOT_STATE_INDEX,
+				.sub_index = HCU_LEFT_FOOT_STATE_SUBINDEX,
+				.type = HCU_LEFT_FOOT_STATE_TYPE,
+				.permissions = HCU_LEFT_FOOT_STATE_PERMISSIONS,
+				.data_ptr = &this->hcu.left_foot_state
+		},
+		{
+				.main_index = CCU_HCU_INDEX_OFFSET + HCU_RIGHT_FOOT_STATE_INDEX,
+				.sub_index = HCU_RIGHT_FOOT_STATE_SUBINDEX,
+				.type = HCU_RIGHT_FOOT_STATE_TYPE,
+				.permissions = HCU_RIGHT_FOOT_STATE_PERMISSIONS,
+				.data_ptr = &this->hcu.right_foot_state
 		}
 };
 
@@ -141,7 +169,7 @@ const uv_command_st terminal_commands[] = {
 				.id = CMD_SET,
 				.str = "set",
 				.instructions = "Sets the configurations for output modules.\n"
-						"Usage: set <\"bl\"/\"bf\"/\"br\"/\"bt\"> "
+						"Usage: set <\"str\"/\"g1\"/\"g2\"/\"g3\"> "
 						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\">"
 						"<value>",
 				.callback = &set_callb
@@ -169,12 +197,21 @@ static void stat_output(uv_dual_solenoid_output_st *output, const char *name) {
 void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
 	printf("SYSTEM STATUS:\n");
 	printf("Total current: %u mA\n", (unsigned int) this->total_current);
+	printf("Gear: %u\n", this->drive.gear + 1);
 	stat_output(&this->steer.out, "Steer");
 	stat_output(&this->drive.out1, "Drive 1");
 	stat_output(&this->drive.out2, "Drive 2");
+	printf("brake state: %u, current: %u mA\n",
+			uv_output_get_state(&this->drive.brake),
+			uv_output_get_current(&this->drive.brake));
+	printf("Pedal: state: %u, hal1: %i hal2: %i request: %i\n",
+			this->pedal.state, this->pedal.req[0], this->pedal.req[1], this->pedal.request);
 	printf("Boom VDD state: %u, current: %u mA\n",
 			uv_output_get_state(&this->boom_vdd),
 			uv_output_get_current(&this->boom_vdd));
+	printf("emcy: %u, seat sw: %u, ignkey state: %u, fsb heartbeat expired: %u\n",
+			this->fsb.emcy, this->fsb.seat_sw, this->fsb.ignkey_state,
+			uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID));
 }
 
 void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
@@ -185,7 +222,21 @@ void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 		uv_dual_solenoid_output_conf_st *conf = NULL;
 		const char *str = argv[0].str;
 
-		printf("Unknown module '%s'\n", str);
+		if (strcmp(str, "str") == 0) {
+			conf = &this->steer_conf.out_conf;
+		}
+		else if (strcmp(str, "g1") == 0) {
+			conf = &this->drive_conf.gear_conf[CCU_GEAR_1];
+		}
+		else if (strcmp(str, "g2") == 0) {
+			conf = &this->drive_conf.gear_conf[CCU_GEAR_2];
+		}
+		else if (strcmp(str, "g3") == 0) {
+			conf = &this->drive_conf.gear_conf[CCU_GEAR_3];
+		}
+		else {
+			printf("Unknown module '%s'\n", str);
+		}
 
 		if (conf) {
 			if (args > 2) {

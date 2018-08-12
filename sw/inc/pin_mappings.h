@@ -36,5 +36,8 @@
 #define BOOM_VDD_OUT		P1_5
 #define BOOM_VDD_SENSE		ADC1_10
 
+#define BRAKE_OUT			P0_26
+#define BRAKE_SENSE			ADC1_8
+
 
 #endif /* UW_MB_SRC_PIN_MAPPINGS_H_ */

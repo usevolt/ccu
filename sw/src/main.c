@@ -29,13 +29,12 @@ void can1_callback(void *user_ptr, uv_can_message_st* msg);
 
 
 void gpio_callback(uv_gpios_e gpio) {
-	uv_mcp2515_int(&this->mcp2515);
+	uv_mcp2515_int(&this->mcp2515, true);
 }
 
 void can1_callback(void *user_ptr, uv_can_message_st* msg) {
 	// forward CAN1 messages to CAN2
 	uv_mcp2515_send(&this->mcp2515, msg);
-	printf("!");
 }
 
 
@@ -64,6 +63,9 @@ void init(dev_st* me) {
 	this->fsb.emcy = 0;
 	this->fsb.ignkey_state = FSB_IGNKEY_STATE_OFF;
 
+	this->hcu.left_foot_state = HCU_FOOT_DOWN;
+	this->hcu.right_foot_state = HCU_FOOT_DOWN;
+
 	steer_init(&this->steer, &this->steer_conf);
 	drive_init(&this->drive, &this->drive_conf);
 
@@ -71,18 +73,22 @@ void init(dev_st* me) {
 
 	uv_terminal_init(terminal_commands, commands_size());
 
-	uv_canopen_set_state(CANOPEN_OPERATIONAL);
-
-	uv_gpio_interrupt_init(&gpio_callback);
 
 	uv_gpio_init_output(MCP2515_RESET, true);
 
+	uv_gpio_interrupt_init(&gpio_callback);
 	uv_mcp2515_init(&this->mcp2515, SPI0, SPI_SLAVE0, MCP2515_INT, uv_memory_get_can_baudrate());
 
 	uv_output_init(&this->boom_vdd, BOOM_VDD_SENSE, BOOM_VDD_OUT, VN5E01_CURRENT_AMPL_UA,
 			BOOM_VDD_MAX_CURRENT, BOOM_VDD_FAULT_CURRENT, BOOM_VDD_AVG_COUNT,
 			CCU_EMCY_BOOM_VDD_OVERLOAD, CCU_EMCY_BOOM_VDD_FAULT);
 	uv_output_set(&this->boom_vdd, OUTPUT_STATE_ON);
+
+
+	// configure CAN1 to receive all messages
+	uv_can_config_rx_message(CONFIG_CANOPEN_CHANNEL, 0x0, 0, CAN_STD);
+	uv_canopen_set_can_callback(&can1_callback);
+	uv_canopen_set_state(CANOPEN_OPERATIONAL);
 
 	initialized = true;
 }
@@ -136,10 +142,14 @@ void step(void* me) {
 		// terminal step function
 		uv_terminal_step();
 
-		this->total_current = 0;
+		this->total_current = abs(steer_get_current(&this->steer)) +
+				abs(drive_get_current1(&this->drive)) +
+				abs(drive_get_current2(&this->drive));
 
 		pedal_step(&this->pedal);
 
+		// set driving input from pedal
+		drive_set_request(&this->drive, pedal_get_request(&this->pedal));
 		steer_step(&this->steer, step_ms);
 		drive_step(&this->drive, step_ms);
 
@@ -161,6 +171,8 @@ void step(void* me) {
 		// outputs are disables if FSB is not found, ignition key is not in ON state,
 		// or emergency switch is pressed
 		if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
+				uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID) ||
+				uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID) ||
 				(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
 				this->fsb.emcy ||
 				!this->fsb.seat_sw) {
@@ -193,11 +205,14 @@ int main(void) {
 	uv_init(&dev);
 
 
-	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 5,
+	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 4,
 			&dev, UV_RTOS_IDLE_PRIORITY + 1, NULL);
 
-	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,
+	uv_rtos_task_create(&mcp2515_step, "mcp2515", UV_RTOS_MIN_STACK_SIZE * 3,
 			&dev, UV_RTOS_IDLE_PRIORITY + 2, NULL);
+
+	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,
+			&dev, UV_RTOS_IDLE_PRIORITY + 3, NULL);
 
 
 	uv_rtos_start_scheduler();
