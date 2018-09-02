@@ -61,5 +61,6 @@ release/src/messages.o: src/messages.c inc/main.h \
  hal/uv_hal/freertos/include/task.h hal/uv_hal/freertos/include/list.h \
  hal/uv_hal/freertos/include/semphr.h hal/uv_hal/freertos/include/queue.h \
  inc/modules/steer.h inc/input.h inc/modules/drive.h inc/pedal.h \
- inc/messages.h hal/uv_hal/inc/uv_reset.h hal/uv_hal/inc/uv_terminal.h \
+ inc/modules/cabrot.h inc/modules/telescope.h inc/messages.h \
+ hal/uv_hal/inc/uv_reset.h hal/uv_hal/inc/uv_terminal.h \
  hal/uv_hal/inc/uv_stdout.h inc/pin_mappings.h hal/uv_hal/inc/uv_timer.h

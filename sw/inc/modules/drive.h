@@ -45,13 +45,25 @@ typedef struct {
 	// output for all other gears
 	uv_dual_solenoid_output_st out2;
 
+	// output for back driving on CM & LM
+	uv_dual_solenoid_output_st out3;
+
 	// inhibit delay for sending emcy messages when driving foot down
 	uv_delay_st foot_down_emcy_delay;
 
 	// output for brake
 	uv_output_st brake;
 
+	// output for gear3
+	uv_output_st gear3;
+
 	ccu_gear_e gear;
+	input_st gear_req;
+
+	// request for 4wd drive on first gear to HCU
+	uv_output_state_e d4wd_req;
+
+	ccu_cabdir_e cabdir;
 
 	drive_conf_st *conf;
 
@@ -74,12 +86,26 @@ static inline int16_t drive_get_current2(drive_st *this) {
 	return uv_dual_solenoid_output_get_current(&this->out2);
 }
 
+static inline int16_t drive_get_current3(drive_st *this) {
+	return uv_dual_solenoid_output_get_current(&this->out3);
+}
+
+static inline int16_t drive_get_brake_current(drive_st *this) {
+	return uv_output_get_current(&this->brake);
+}
+
+static inline int16_t drive_get_gear3_current(drive_st *this) {
+	return uv_output_get_current(&this->gear3);
+}
+
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
 static inline void drive_solenoid_step(drive_st *this, uint16_t step_ms) {
 	uv_dual_solenoid_output_step(&this->out1, step_ms);
 	uv_dual_solenoid_output_step(&this->out2, step_ms);
+	uv_dual_solenoid_output_step(&this->out3, step_ms);
 	uv_output_step(&this->brake, step_ms);
+	uv_output_step(&this->gear3, step_ms);
 }
 
 
@@ -92,6 +118,9 @@ static inline void drive_set_request(drive_st *this, int8_t value) {
 static inline void drive_disable(drive_st *this) {
 	uv_dual_solenoid_output_disable(&this->out1);
 	uv_dual_solenoid_output_disable(&this->out2);
+	uv_dual_solenoid_output_disable(&this->out3);
+	uv_output_disable(&this->brake);
+	uv_output_disable(&this->gear3);
 }
 
 
@@ -99,6 +128,9 @@ static inline void drive_disable(drive_st *this) {
 static inline void drive_enable(drive_st *this) {
 	uv_dual_solenoid_output_enable(&this->out1);
 	uv_dual_solenoid_output_enable(&this->out2);
+	uv_dual_solenoid_output_enable(&this->out3);
+	uv_output_enable(&this->brake);
+	uv_output_enable(&this->gear3);
 }
 
 

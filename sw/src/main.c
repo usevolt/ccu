@@ -48,6 +48,8 @@ void init(dev_st* me) {
 
 		steer_conf_reset(&this->steer_conf);
 		drive_conf_reset(&this->drive_conf);
+		cabrot_conf_reset(&this->cabrot_conf);
+		telescope_conf_reset(&this->telescope_conf);
 
 
 		// initialize non-volatile memory to default settings
@@ -68,6 +70,8 @@ void init(dev_st* me) {
 
 	steer_init(&this->steer, &this->steer_conf);
 	drive_init(&this->drive, &this->drive_conf);
+	cabrot_init(&this->cabrot, &this->cabrot_conf);
+	telescope_init(&this->telescope, &this->telescope_conf);
 
 	pedal_init(&this->pedal);
 
@@ -77,7 +81,11 @@ void init(dev_st* me) {
 	uv_gpio_init_output(MCP2515_RESET, true);
 
 	uv_gpio_interrupt_init(&gpio_callback);
-	uv_mcp2515_init(&this->mcp2515, SPI0, SPI_SLAVE0, MCP2515_INT, uv_memory_get_can_baudrate());
+	if (uv_mcp2515_init(&this->mcp2515, SPI0, SPI_SLAVE0,
+			MCP2515_INT, uv_memory_get_can_baudrate())) {
+		printf("MCP2515 init failed\n");
+
+	}
 
 	uv_output_init(&this->boom_vdd, BOOM_VDD_SENSE, BOOM_VDD_OUT, VN5E01_CURRENT_AMPL_UA,
 			BOOM_VDD_MAX_CURRENT, BOOM_VDD_FAULT_CURRENT, BOOM_VDD_AVG_COUNT,
@@ -107,6 +115,8 @@ void solenoid_step(void* me) {
 
 		steer_solenoid_step(&this->steer, step_ms);
 		drive_solenoid_step(&this->drive, step_ms);
+		cabrot_solenoid_step(&this->cabrot, step_ms);
+		telescope_solenoid_step(&this->telescope, step_ms);
 
 		uv_rtos_task_delay(step_ms);
 	}
@@ -144,7 +154,12 @@ void step(void* me) {
 
 		this->total_current = abs(steer_get_current(&this->steer)) +
 				abs(drive_get_current1(&this->drive)) +
-				abs(drive_get_current2(&this->drive));
+				abs(drive_get_current2(&this->drive)) +
+				abs(drive_get_current3(&this->drive)) +
+				abs(drive_get_brake_current(&this->drive)) +
+				abs(drive_get_gear3_current(&this->drive)) +
+				abs(cabrot_get_current(&this->cabrot)) +
+				abs(telescope_get_current(&this->telescope));
 
 		pedal_step(&this->pedal);
 
@@ -152,6 +167,8 @@ void step(void* me) {
 		drive_set_request(&this->drive, pedal_get_request(&this->pedal));
 		steer_step(&this->steer, step_ms);
 		drive_step(&this->drive, step_ms);
+		cabrot_step(&this->cabrot, step_ms);
+		telescope_step(&this->telescope, step_ms);
 
 		uv_output_set_state(&this->boom_vdd, OUTPUT_STATE_ON);
 		uv_output_step(&this->boom_vdd, step_ms);
@@ -179,12 +196,19 @@ void step(void* me) {
 			// disable all outputs
 			steer_disable(&this->steer);
 			drive_disable(&this->drive);
-			uv_output_disable(&this->boom_vdd);
+			cabrot_disable(&this->cabrot);
+			telescope_disable(&this->telescope);
+			// boom VDD is disabled only because of ignkey or emcy switch
+			uv_output_set_enabled(&this->boom_vdd,
+					(!this->fsb.emcy &&
+					(this->fsb.ignkey_state == FSB_IGNKEY_STATE_ON)));
 		}
 		else {
 			// enable outputs
 			steer_enable(&this->steer);
 			drive_enable(&this->drive);
+			cabrot_enable(&this->cabrot);
+			telescope_enable(&this->telescope);
 			uv_output_enable(&this->boom_vdd);
 		}
 

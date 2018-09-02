@@ -72,7 +72,9 @@ typedef struct {
 
 
 /// @brief: Initializes and resets the mcp2515 ic
-bool uv_mcp2515_init(uv_mcp2515_st *this, spi_e spi, spi_slaves_e ssel,
+///
+/// @return: 0 if initialized succesfully, otherwise returns 1.
+int32_t uv_mcp2515_init(uv_mcp2515_st *this, spi_e spi, spi_slaves_e ssel,
 		uv_gpios_e int_gpio, uint32_t can_baudrate);
 
 
@@ -80,6 +82,8 @@ bool uv_mcp2515_init(uv_mcp2515_st *this, spi_e spi, spi_slaves_e ssel,
 /// @brief: Interrupt handler. This should be called when the gpio interrupt happens
 void uv_mcp2515_int(uv_mcp2515_st *this, bool from_isr);
 
+
+uv_can_errors_e uv_mcp2515_get_error_state(uv_mcp2515_st *this);
 
 
 /// @brief: Sends a CAN message

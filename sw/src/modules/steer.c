@@ -30,6 +30,7 @@ void steer_conf_reset(steer_conf_st *this) {
 	this->out_conf.acc = DUAL_SOLENOID_ACC_MAX;
 	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
 	this->out_conf.invert = false;
+	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
@@ -52,11 +53,14 @@ void steer_init(steer_st *this, steer_conf_st *conf_ptr) {
 void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
+	int16_t req = input_get_request(&this->input);
+	if (cabrot_get_dir(&dev.cabrot) == CCU_CABDIR_BACKWARD) {
+		req *= -1;
+	}
+
 	// steering enabled only when driving
 	uv_dual_solenoid_output_set(&this->out,
-			(drive_get_current1(&dev.drive) ||
-					drive_get_current2(&dev.drive)) ?
-							input_get_request(&this->input) : 0);
+			(input_get_request(&dev.drive.input)) ? req : 0);
 
 }
 

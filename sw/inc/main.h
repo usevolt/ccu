@@ -18,10 +18,12 @@
 #include "steer.h"
 #include "drive.h"
 #include "pedal.h"
+#include "cabrot.h"
+#include "telescope.h"
 
 
 #define VND5050_CURRENT_AMPL_UA		1619
-#define VN5E01_CURRENT_AMPL_UA		13923
+#define VN5E01_CURRENT_AMPL_UA		5600
 
 #define DITHER_AMPL_DEF				0
 #define DITHER_FREQ_DEF				50
@@ -43,6 +45,8 @@ typedef struct _dev_st {
 
 	steer_st steer;
 	drive_st drive;
+	cabrot_st cabrot;
+	telescope_st telescope;
 
 	uv_output_st boom_vdd;
 
@@ -67,6 +71,8 @@ typedef struct _dev_st {
 
 	steer_conf_st steer_conf;
 	drive_conf_st drive_conf;
+	cabrot_conf_st cabrot_conf;
+	telescope_conf_st telescope_conf;
 
 	uv_data_end_t data_end;
 

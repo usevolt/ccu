@@ -62,4 +62,5 @@ release/hal/uv_hal/src/canopen/canopen_heartbeat.o: \
  hal/uv_hal/freertos/include/mpu_wrappers.h \
  hal/uv_hal/freertos/include/task.h hal/uv_hal/freertos/include/list.h \
  hal/uv_hal/freertos/include/semphr.h hal/uv_hal/freertos/include/queue.h \
- inc/modules/steer.h inc/input.h inc/modules/drive.h inc/pedal.h
+ inc/modules/steer.h inc/input.h inc/modules/drive.h inc/pedal.h \
+ inc/modules/cabrot.h inc/modules/telescope.h

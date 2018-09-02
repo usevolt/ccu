@@ -35,9 +35,9 @@ typedef struct {
 
 	int8_t last_request;
 
-	bool pressed;
-	bool released;
-	bool clicked;
+	int8_t pressed;
+	int8_t released;
+	int8_t clicked;
 
 	bool click_possible;
 	int32_t click_delay;
@@ -49,15 +49,18 @@ void input_init(input_st *this);
 
 void input_step(input_st *this, uint16_t step_ms);
 
-static inline bool input_pressed(input_st *this) {
+///  @brief: Returns 1 or -1 if positive or negative direction was pressed
+static inline int8_t input_pressed(input_st *this) {
 	return this->pressed;
 }
 
-static inline bool input_released(input_st *this) {
+///  @brief: Returns 1 or -1 if positive or negative direction was released
+static inline int8_t input_released(input_st *this) {
 	return this->released;
 }
 
-static inline bool input_clicked(input_st *this) {
+///  @brief: Returns 1 or -1 if positive or negative direction was clicked
+static inline int8_t input_clicked(input_st *this) {
 	return this->clicked;
 }
 

@@ -21,9 +21,9 @@
 
 
 void input_init(input_st *this) {
-	this->pressed = false;
-	this->released = false;
-	this->clicked = false;
+	this->pressed = 0;
+	this->released = 0;
+	this->clicked = 0;
 	this->request = 0;
 	this->last_request = 0;
 	this->click_possible = false;
@@ -32,21 +32,21 @@ void input_init(input_st *this) {
 void input_step(input_st *this, uint16_t step_ms) {
 	int8_t req = this->request;
 
-	this->clicked = false;
-	this->pressed = false;
-	this->released = false;
+	this->clicked = 0;
+	this->pressed = 0;
+	this->released = 0;
 
 	// pressed
 	if (req && !this->last_request) {
-			this->pressed = true;
+			this->pressed = (req > 0) ? 1  : -1;
 			this->click_delay = INPUT_CLICK_DELAY_MS;
 	}
 	// released
 	else if (!req && this->last_request) {
-		this->released = true;
+		this->released = (this->last_request > 0) ? 1 : -1;
 		this->click_possible = false;
 		if ((this->click_delay > 0) && (this->click_possible)) {
-			this->clicked = true;
+			this->clicked = (this->last_request > 0) ? 1 : -1;
 		}
 	}
 	else {

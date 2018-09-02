@@ -62,4 +62,5 @@ release/hal/uv_hal/src/canopen/canopen_sdo_client.o: \
  hal/uv_hal/inc/output/uv_output.h hal/uv_hal/inc/uv_pid.h \
  hal/uv_hal/inc/uv_pwm.h hal/uv_hal/inc/uv_mcp2515.h \
  hal/uv_hal/inc/uv_spi.h hal/uv_hal/inc/uv_rtos.h inc/modules/steer.h \
- inc/input.h inc/modules/drive.h inc/pedal.h
+ inc/input.h inc/modules/drive.h inc/pedal.h inc/modules/cabrot.h \
+ inc/modules/telescope.h

@@ -29,33 +29,40 @@ void drive_conf_reset(drive_conf_st *this) {
 	this->gear_conf[CCU_GEAR_1].acc = DUAL_SOLENOID_ACC_MAX;
 	this->gear_conf[CCU_GEAR_1].dec = DUAL_SOLENOID_DEC_MAX;
 	this->gear_conf[CCU_GEAR_1].invert = false;
+	this->gear_conf[CCU_GEAR_1].assembly_invert = false;
 	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 250;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
 	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 250;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
 
 	this->gear_conf[CCU_GEAR_2].acc = 30;
-	this->gear_conf[CCU_GEAR_2].dec = 0;
+	this->gear_conf[CCU_GEAR_2].dec = 25;
 	this->gear_conf[CCU_GEAR_2].invert = false;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1800;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 200;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1800;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 250;
+	this->gear_conf[CCU_GEAR_2].assembly_invert = false;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
 
 	this->gear_conf[CCU_GEAR_3].acc = 30;
 	this->gear_conf[CCU_GEAR_3].dec = 0;
 	this->gear_conf[CCU_GEAR_3].invert = false;
+	this->gear_conf[CCU_GEAR_3].assembly_invert = false;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 150;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
 }
 
 
 void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 	input_init(&this->input);
+	input_init(&this->gear_req);
 	this->conf = conf_ptr;
 	this->gear = CCU_GEAR_2;
+	this->d4wd_req = OUTPUT_STATE_OFF;
+	this->cabdir = CCU_CABDIR_FORWARD;
+
 	uv_delay_init(&this->foot_down_emcy_delay, DRIVE_FOOT_DOWN_DELAY_MS);
 
 	uv_dual_solenoid_output_init(&this->out1, &this->conf->gear_conf[this->gear], DRIVE1_PWMA,
@@ -68,19 +75,51 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
 			CCU_EMCY_DRIVE2_OVERLOAD_A, CCU_EMCY_DRIVE2_OVERLOAD_B,
 			CCU_EMCY_DRIVE2_FAULT_A, CCU_EMCY_DRIVE2_FAULT_B);
+	uv_dual_solenoid_output_init(&this->out3, &this->conf->gear_conf[this->gear], DRIVE3_PWMA,
+			DRIVE3_PWMB, DRIVE3_SENSE, dev.dither_freq, dev.dither_ampl,
+			VND5050_CURRENT_AMPL_UA, SOLENOID_MAX_CURRENT, SOLENOID_FAULT_CURRENT,
+			CCU_EMCY_DRIVE3_OVERLOAD_A, CCU_EMCY_DRIVE3_OVERLOAD_B,
+			CCU_EMCY_DRIVE3_FAULT_A, CCU_EMCY_DRIVE3_FAULT_B);
 	uv_output_init(&this->brake, BRAKE_SENSE, BRAKE_OUT, VND5050_CURRENT_AMPL_UA,
-			5000, 15000, 50, CCU_EMCY_BRAKE_OVERLOAD, CCU_EMCY_BRAKE_FAULT);
+			4000, 5000, 50, CCU_EMCY_BRAKE_OVERLOAD, CCU_EMCY_BRAKE_FAULT);
+	uv_output_init(&this->gear3, GEAR3_SENSE, GEAR3_OUT, VN5E01_CURRENT_AMPL_UA,
+			4000, 8000, 50, CCU_EMCY_GEAR3_OVERLOAD, CCU_EMCY_GEAR3_FAULT);
 
 }
 
 
 void drive_step(drive_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
+	input_step(&this->gear_req, step_ms);
 
 	uv_dual_solenoid_output_set_conf(&this->out1, &this->conf->gear_conf[this->gear]);
 	uv_dual_solenoid_output_set_conf(&this->out2, &this->conf->gear_conf[this->gear]);
+	uv_dual_solenoid_output_set_conf(&this->out3, &this->conf->gear_conf[this->gear]);
 
 	uv_delay(&this->foot_down_emcy_delay, step_ms);
+
+	int8_t g = input_pressed(&this->gear_req);
+	// increase gear
+	if (g > 0) {
+		if (this->gear < CCU_GEAR_COUNT - 1) {
+			this->gear++;
+		}
+		else {
+			this->gear = CCU_GEAR_1;
+		}
+	}
+	// decrease gear
+	else if (g < 0) {
+		if (this->gear != CCU_GEAR_1) {
+			this->gear--;
+		}
+		else {
+			this->gear = CCU_GEAR_COUNT - 1;
+		}
+	}
+	else {
+
+	}
 
 	// prevent driving when legs are down
 	if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
@@ -96,24 +135,61 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 			uv_delay_init(&this->foot_down_emcy_delay, DRIVE_FOOT_DOWN_DELAY_MS);
 		}
 		uv_dual_solenoid_output_set(&this->out1, 0);
+		uv_dual_solenoid_output_set(&this->out2, 0);
+		uv_dual_solenoid_output_set(&this->out3, 0);
 	}
 	else {
+		// invert driving direction if the cab is rotated
+		int16_t req = input_get_request(&this->input);
+		if (req == 0) {
+			// cab dir is updated only when driving is stopped
+			this->cabdir = cabrot_get_dir(&dev.cabrot);
+		}
+		else {
+			req *= (this->cabdir == CCU_CABDIR_BACKWARD) ? -1 : 1;
+		}
+
 		// driving normally
-		uv_dual_solenoid_output_set(&this->out1, input_get_request(&this->input));
+		uv_dual_solenoid_output_set(&this->out1, req);
 
 		// 2nd output is used only with 2nd and 3rd gears
 		uv_dual_solenoid_output_set(&this->out2,
-				(this->gear == CCU_GEAR_1) ? 0 : input_get_request(&this->input));
+				(this->gear == CCU_GEAR_1) ? 0 : req);
+
+		// 3rd output is used only on first gear (4wd on LM & CM),
+		// when the loading space telescope is not moving
+		uv_dual_solenoid_output_set(&this->out3,
+				(this->gear == CCU_GEAR_1 &&
+						(telescope_get_current(&dev.telescope) == 0)) ?
+								-req : 0);
 	}
 
+	// 4WD drive on first gear
+	this->d4wd_req = (uv_dual_solenoid_output_get_current(&this->out1) &&
+			(this->gear != CCU_GEAR_1)) ?
+					OUTPUT_STATE_ON : OUTPUT_STATE_OFF;
+	// if loading space telescope is moving,
+	// d4wd is always ON to make sure the wheels can rotate freely
+	if (telescope_get_current(&dev.telescope)) {
+		this->d4wd_req = OUTPUT_STATE_ON;
+	}
+	// trigger the PDO transmission right away
+	if (input_pressed(&this->input)) {
+		uv_canopen_pdo_mapping_update(CCU_D4WD_REQ_INDEX, CCU_D4WD_REQ_SUBINDEX);
+	}
 
-//		printf("%i %i %i %i\n", this->out2.solenoid[0].pwm, this->out2.solenoid[1].pwm,
-//				uv_dual_solenoid_output_get_current(&this->out2),
-//				uv_dual_solenoid_output_get_state(&this->out2, DUAL_OUTPUT_SOLENOID_A));
-
+	// enable brake when driving
 	uv_output_set_state(&this->brake,
 			(uv_dual_solenoid_output_get_current(&this->out1) ||
 					uv_dual_solenoid_output_get_current(&this->out2)) ?
 							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
+
+	// control gear3 valve when driving with 3rd gear
+	uv_output_set_state(&this->gear3,
+			((uv_dual_solenoid_output_get_current(&this->out1) ||
+					uv_dual_solenoid_output_get_current(&this->out2)) &&
+					(this->gear == CCU_GEAR_3)) ?
+							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
+
 }
 
