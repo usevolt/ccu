@@ -21,6 +21,7 @@
 
 
 #include <uv_utilities.h>
+#include <uv_dual_solenoid_output.h>
 
 /// @brief: Module which converts raw variable input into pressed, released, etc actions
 
@@ -65,6 +66,6 @@ static inline int8_t input_clicked(input_st *this) {
 }
 
 /// @brief: Returns the input request in scale of -1000 ... 1000
-int32_t input_get_request(input_st *this);
+int32_t input_get_request(input_st *this, uv_dual_solenoid_output_conf_st *conf);
 
 #endif /* INC_INPUT_H_ */

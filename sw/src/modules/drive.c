@@ -125,7 +125,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 	if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
 			(dev.hcu.right_foot_state == HCU_FOOT_DOWN)) {
 
-		if (input_get_request(&this->input) &&
+		if (input_get_request(&this->input, &this->conf->gear_conf[this->gear]) &&
 				uv_delay_has_ended(&this->foot_down_emcy_delay)) {
 
 			uv_canopen_emcy_send(CANOPEN_EMCY_DEVICE_SPECIFIC,
@@ -140,7 +140,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 	}
 	else {
 		// invert driving direction if the cab is rotated
-		int16_t req = input_get_request(&this->input);
+		int16_t req = input_get_request(&this->input, &this->conf->gear_conf[this->gear]);
 		if (req == 0) {
 			// cab dir is updated only when driving is stopped
 			this->cabdir = cabrot_get_dir(&dev.cabrot);

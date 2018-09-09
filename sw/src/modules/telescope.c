@@ -54,7 +54,7 @@ void telescope_step(telescope_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
 	uv_dual_solenoid_output_set(&this->out,
-				input_get_request(&this->input));
+				input_get_request(&this->input, &this->conf->out_conf));
 
 }
 

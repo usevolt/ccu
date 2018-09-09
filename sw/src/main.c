@@ -29,12 +29,16 @@ void can1_callback(void *user_ptr, uv_can_message_st* msg);
 
 
 void gpio_callback(uv_gpios_e gpio) {
-	uv_mcp2515_int(&this->mcp2515, true);
+	uv_mcp2515_int(&this->mcp2515);
 }
 
 void can1_callback(void *user_ptr, uv_can_message_st* msg) {
 	// forward CAN1 messages to CAN2
-	uv_mcp2515_send(&this->mcp2515, msg);
+	if (uv_mcp2515_send(&this->mcp2515, msg) != ERR_NONE) {
+		uv_can_msg_st m;
+		uv_mcp2515_tx_pop(&this->mcp2515, &m);
+		uv_mcp2515_send(&this->mcp2515, msg);
+	}
 }
 
 
@@ -67,6 +71,7 @@ void init(dev_st* me) {
 
 	this->hcu.left_foot_state = HCU_FOOT_DOWN;
 	this->hcu.right_foot_state = HCU_FOOT_DOWN;
+	this->hcu.implement = HCU_IMPLEMENT_UW180S;
 
 	steer_init(&this->steer, &this->steer_conf);
 	drive_init(&this->drive, &this->drive_conf);
@@ -131,7 +136,7 @@ void mcp2515_step(void *me) {
 		uint32_t step_ms = 2;
 
 		uv_can_msg_st msg;
-		// forward messages from CAN2 to CAN1
+
 		while (uv_mcp2515_receive(&this->mcp2515, &msg) == ERR_NONE) {
 			uv_can_send(CONFIG_CANOPEN_CHANNEL, &msg);
 		}
@@ -170,7 +175,9 @@ void step(void* me) {
 		cabrot_step(&this->cabrot, step_ms);
 		telescope_step(&this->telescope, step_ms);
 
-		uv_output_set_state(&this->boom_vdd, OUTPUT_STATE_ON);
+		uv_output_set_state(&this->boom_vdd,
+				(this->hcu.implement == HCU_IMPLEMENT_UW180S) ?
+						OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
 		uv_output_step(&this->boom_vdd, step_ms);
 
 		// if keypad heartbeat messages are not received, input from that keypad is set to zero
@@ -229,13 +236,13 @@ int main(void) {
 	uv_init(&dev);
 
 
-	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 4,
+	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
 			&dev, UV_RTOS_IDLE_PRIORITY + 1, NULL);
 
-	uv_rtos_task_create(&mcp2515_step, "mcp2515", UV_RTOS_MIN_STACK_SIZE * 3,
+	uv_rtos_task_create(&mcp2515_step, "mcp2515", UV_RTOS_MIN_STACK_SIZE * 2,
 			&dev, UV_RTOS_IDLE_PRIORITY + 2, NULL);
 
-	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 2,
+	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 3,
 			&dev, UV_RTOS_IDLE_PRIORITY + 3, NULL);
 
 
@@ -245,6 +252,7 @@ int main(void) {
     // Enter an infinite loop
 	// never should end up here
     while(1) {
+    	printf("scheduler returned\r");
     }
     return 0;
 }

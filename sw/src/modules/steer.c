@@ -53,14 +53,14 @@ void steer_init(steer_st *this, steer_conf_st *conf_ptr) {
 void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
-	int16_t req = input_get_request(&this->input);
+	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
 	if (cabrot_get_dir(&dev.cabrot) == CCU_CABDIR_BACKWARD) {
 		req *= -1;
 	}
 
 	// steering enabled only when driving
 	uv_dual_solenoid_output_set(&this->out,
-			(input_get_request(&dev.drive.input)) ? req : 0);
+			(input_get_request(&dev.drive.input, &this->conf->out_conf)) ? req : 0);
 
 }
 

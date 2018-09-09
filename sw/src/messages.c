@@ -111,6 +111,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->drive.d4wd_req
 		},
 		{
+				.main_index = CCU_BRAKE_CURRENT_INDEX,
+				.sub_index = CCU_BRAKE_CURRENT_SUBINDEX,
+				.type = CCU_BRAKE_CURRENT_TYPE,
+				.permissions = CCU_BRAKE_CURRENT_PERMISSIONS,
+				.data_ptr = &this->drive.brake.current
+		},
+		{
 				.main_index = CCU_CABROT_REQ_INDEX,
 				.sub_index = CCU_CABROT_REQ_SUBINDEX,
 				.type = CCU_CABROT_REQ_TYPE,
@@ -137,6 +144,13 @@ canopen_object_st obj_dict[] = {
 				.type = CCU_CABROT_DIR_TYPE,
 				.permissions = CCU_CABROT_DIR_PERMISSIONS,
 				.data_ptr = &this->cabrot.dir
+		},
+		{
+				.main_index = CCU_CABBRAKE_CURRENT_INDEX,
+				.sub_index = CCU_CABBRAKE_CURRENT_SUBINDEX,
+				.type = CCU_CABBRAKE_CURRENT_TYPE,
+				.permissions = CCU_CABBRAKE_CURRENT_PERMISSIONS,
+				.data_ptr = &this->cabrot.cabbrake.current
 		},
 		{
 				.main_index = CCU_TELESCOPE_REQ_INDEX,
@@ -202,6 +216,28 @@ canopen_object_st obj_dict[] = {
 				.type = CCU_PEDAL_RAW_TYPE,
 				.permissions = CCU_PEDAL_RAW_PERMISSIONS,
 				.data_ptr = &this->pedal.hal[0]
+		},
+		{
+				.main_index = CCU_BOOM_VDD_STATE_INDEX,
+				.sub_index = CCU_BOOM_VDD_STATE_SUBINDEX,
+				.type = CCU_BOOM_VDD_STATE_TYPE,
+				.permissions = CCU_BOOM_VDD_STATE_PERMISSIONS,
+				.data_ptr = &this->boom_vdd.state
+		},
+		{
+				.main_index = CCU_BOOM_VDD_CURRENT_INDEX,
+				.sub_index = CCU_BOOM_VDD_CURRENT_SUBINDEX,
+				.type = CCU_BOOM_VDD_CURRENT_TYPE,
+				.permissions = CCU_BOOM_VDD_CURRENT_PERMISSIONS,
+				.data_ptr = &this->boom_vdd.current
+		},
+
+		{
+				.main_index = CCU_HCU_INDEX_OFFSET + HCU_IMPLEMENT_INDEX,
+				.sub_index = HCU_IMPLEMENT_SUBINDEX,
+				.type = HCU_IMPLEMENT_TYPE,
+				.permissions = CANOPEN_WO,
+				.data_ptr = &this->hcu.implement
 		},
 		{
 				.main_index = CCU_HCU_INDEX_OFFSET + HCU_LEFT_FOOT_STATE_INDEX,
