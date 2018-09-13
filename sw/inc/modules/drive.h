@@ -121,6 +121,7 @@ static inline void drive_disable(drive_st *this) {
 	uv_dual_solenoid_output_disable(&this->out3);
 	uv_output_disable(&this->brake);
 	uv_output_disable(&this->gear3);
+	this->input.request = 0;
 }
 
 

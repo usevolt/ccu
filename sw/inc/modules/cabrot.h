@@ -78,6 +78,7 @@ static inline void cabrot_solenoid_step(cabrot_st *this, uint16_t step_ms) {
 static inline void cabrot_disable(cabrot_st *this) {
 	uv_dual_solenoid_output_disable(&this->out);
 	uv_output_disable(&this->cabbrake);
+	this->input.request = 0;
 }
 
 
