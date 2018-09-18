@@ -35,6 +35,9 @@
 #define BOOM_VDD_FAULT_CURRENT		25000
 #define BOOM_VDD_AVG_COUNT			10
 
+
+#define ASSEMBLY_EEPROM_ADDR		0
+
 /// @brief: main data structure.
 /// This struct can be save to non-volatile flash memory with
 /// a terminal commmand 'save'.
@@ -49,6 +52,15 @@ typedef struct _dev_st {
 	telescope_st telescope;
 
 	uv_output_st boom_vdd;
+
+	// assembly settings are stored in eeprom
+	// Note: These variables are not initialized unless explicitly set.
+	// They default to value 0 but this depends on the hardware.
+	struct {
+		uint8_t telescope_installed;
+		uint8_t cabrot_installed;
+	} assembly;
+	uint8_t assembly_write;
 
 	struct {
 		fsb_ignkey_states_e ignkey_state;
@@ -86,6 +98,7 @@ extern dev_st dev;
 void step(void* me);
 
 void init(dev_st* me);
+
 
 
 

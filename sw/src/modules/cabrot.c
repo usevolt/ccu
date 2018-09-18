@@ -56,23 +56,30 @@ void cabrot_init(cabrot_st *this, cabrot_conf_st *conf_ptr) {
 
 
 void cabrot_step(cabrot_st *this, uint16_t step_ms) {
-	input_step(&this->input, step_ms);
+	if (dev.assembly.cabrot_installed) {
+		input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out,
-				input_get_request(&this->input, &this->conf->out_conf));
+		uv_dual_solenoid_output_set(&this->out,
+					input_get_request(&this->input, &this->conf->out_conf));
 
-	if (uv_dual_solenoid_output_get_current(&this->out) > 0) {
-		this->dir = CCU_CABDIR_FORWARD;
+		if (uv_dual_solenoid_output_get_current(&this->out) > 0) {
+			this->dir = CCU_CABDIR_FORWARD;
+		}
+		else if (uv_dual_solenoid_output_get_current(&this->out) < 0) {
+			this->dir = CCU_CABDIR_BACKWARD;
+		}
+		else {
+
+		}
+
+		uv_output_set_state(&this->cabbrake, uv_dual_solenoid_output_get_current(&this->out) ?
+				OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
 	}
-	else if (uv_dual_solenoid_output_get_current(&this->out) < 0) {
-		this->dir = CCU_CABDIR_BACKWARD;
-	}
-	else {
-
-	}
-
-	uv_output_set_state(&this->cabbrake, uv_dual_solenoid_output_get_current(&this->out) ?
-			OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
-
 }
 
+void cabrot_solenoid_step(cabrot_st *this, uint16_t step_ms) {
+	if (dev.assembly.cabrot_installed) {
+		uv_dual_solenoid_output_step(&this->out, step_ms);
+		uv_output_step(&this->cabbrake, step_ms);
+	}
+}

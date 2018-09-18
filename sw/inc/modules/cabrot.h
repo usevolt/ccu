@@ -66,10 +66,7 @@ static inline int16_t cabrot_get_current(cabrot_st *this) {
 
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
-static inline void cabrot_solenoid_step(cabrot_st *this, uint16_t step_ms) {
-	uv_dual_solenoid_output_step(&this->out, step_ms);
-	uv_output_step(&this->cabbrake, step_ms);
-}
+void cabrot_solenoid_step(cabrot_st *this, uint16_t step_ms);
 
 
 

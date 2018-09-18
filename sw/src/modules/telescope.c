@@ -51,10 +51,18 @@ void telescope_init(telescope_st *this, telescope_conf_st *conf_ptr) {
 
 
 void telescope_step(telescope_st *this, uint16_t step_ms) {
-	input_step(&this->input, step_ms);
+	if (dev.assembly.telescope_installed) {
+		input_step(&this->input, step_ms);
 
-	uv_dual_solenoid_output_set(&this->out,
-				input_get_request(&this->input, &this->conf->out_conf));
-
+		uv_dual_solenoid_output_set(&this->out,
+					input_get_request(&this->input, &this->conf->out_conf));
+	}
 }
 
+
+
+void telescope_solenoid_step(telescope_st *this, uint16_t step_ms) {
+	if (dev.assembly.telescope_installed) {
+		uv_dual_solenoid_output_step(&this->out, step_ms);
+	}
+}

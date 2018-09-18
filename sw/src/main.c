@@ -17,6 +17,7 @@
 #include <uv_utilities.h>
 #include <uv_rtos.h>
 #include <string.h>
+#include <uv_eeprom.h>
 
 dev_st dev = {};
 static bool initialized = false;
@@ -81,6 +82,9 @@ void init(dev_st* me) {
 	pedal_init(&this->pedal);
 
 	uv_terminal_init(terminal_commands, commands_size());
+
+	uv_eeprom_read(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+	this->assembly_write = 0;
 
 
 	uv_gpio_init_output(MCP2515_RESET, true);
@@ -156,6 +160,11 @@ void step(void* me) {
 
 		// terminal step function
 		uv_terminal_step();
+
+		if (this->assembly_write) {
+			uv_eeprom_write(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+			this->assembly_write = 0;
+		}
 
 		this->total_current = abs(steer_get_current(&this->steer)) +
 				abs(drive_get_current1(&this->drive)) +

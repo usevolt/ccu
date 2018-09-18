@@ -18,6 +18,7 @@
 #include <string.h>
 #include <uv_timer.h>
 #include <uv_utilities.h>
+#include <uv_eeprom.h>
 
 extern dev_st dev;
 #define this (&dev)
@@ -231,6 +232,20 @@ canopen_object_st obj_dict[] = {
 				.permissions = CCU_BOOM_VDD_CURRENT_PERMISSIONS,
 				.data_ptr = &this->boom_vdd.current
 		},
+		{
+				.main_index = CCU_ASSEMBLY_INDEX,
+				.array_max_size = CCU_ASSEMBLY_ARRAY_SIZE,
+				.type = CCU_ASSEMBLY_TYPE,
+				.permissions = CCU_ASSEMBLY_PERMISSIONS,
+				.data_ptr = &this->assembly
+		},
+		{
+				.main_index = CCU_ASSEMBLY_WRITE_INDEX,
+				.sub_index = CCU_ASSEMBLY_WRITE_SUBINDEX,
+				.type = CCU_ASSEMBLY_WRITE_TYPE,
+				.permissions = CCU_ASSEMBLY_WRITE_PERMISSIONS,
+				.data_ptr = &this->assembly_write
+		},
 
 		{
 				.main_index = CCU_HCU_INDEX_OFFSET + HCU_IMPLEMENT_INDEX,
@@ -262,7 +277,7 @@ int obj_dict_len() {
 void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 void can2_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
-
+void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 
 const uv_command_st terminal_commands[] = {
 		{
@@ -287,6 +302,13 @@ const uv_command_st terminal_commands[] = {
 				.instructions = "Does various operations to CAN2 (MCP2515 module). \n"
 						"Usage: can2 <\"reset\"/\"hardreset\">",
 				.callback = &can2_callb
+		},
+		{
+				.id = CMD_ASS,
+				.str = "ass",
+				.instructions = "Sets the assembly bits.\n"
+						"Usage: ass <\"cabrot\"/\"telescope\"> <value>",
+				.callback = &ass_callb
 		}
 };
 
@@ -451,6 +473,41 @@ void can2_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 			printf("unknown command %s\n", str);
 		}
 	}
+}
+
+void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
+	if (args >= 2 &&
+			argv[0].type == ARG_STRING &&
+			argv[1].type == ARG_INTEGER) {
+		char *str = argv[0].str;
+		int value = argv[1].number;
+		bool match = true;
+		if (strcmp(str, "cabrot") == 0) {
+			this->assembly.cabrot_installed = value;
+		}
+		else if (strcmp(str, "telescope") == 0) {
+			this->assembly.telescope_installed = value;
+		}
+		else {
+			match = false;
+		}
+		if (match) {
+			uv_eeprom_write(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
+		}
+	}
+	else if (args) {
+		printf("First argument should be a string defining the parameter to set\n"
+				"and second parameter the value which will be set.\n");
+	}
+	else {
+
+	}
+
+	printf("Assembly variable:\n"
+			"   Cabrot: %u\n"
+			"   Telescope: %u\n",
+			this->assembly.cabrot_installed,
+			this->assembly.telescope_installed);
 }
 
 
