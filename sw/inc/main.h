@@ -57,8 +57,8 @@ typedef struct _dev_st {
 	// Note: These variables are not initialized unless explicitly set.
 	// They default to value 0 but this depends on the hardware.
 	struct {
-		uint8_t telescope_installed;
 		uint8_t cabrot_installed;
+		uint8_t telescope_installed;
 	} assembly;
 	uint8_t assembly_write;
 
