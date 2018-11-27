@@ -161,7 +161,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 		uv_dual_solenoid_output_set(&this->out3,
 				(this->gear == CCU_GEAR_1 &&
 						(telescope_get_current(&dev.telescope) == 0)) ?
-								req : 0);
+								-req : 0);
 	}
 
 	// 4WD drive on first gear
