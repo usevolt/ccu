@@ -59,7 +59,7 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 	input_init(&this->input);
 	input_init(&this->gear_req);
 	this->conf = conf_ptr;
-	this->gear = CCU_GEAR_2;
+	this->gear = CCU_GEAR_1;
 	this->d4wd_req = OUTPUT_STATE_OFF;
 	this->cabdir = CCU_CABDIR_FORWARD;
 
