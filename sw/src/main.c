@@ -92,6 +92,7 @@ void init(dev_st* me) {
 	uv_gpio_interrupt_init(&gpio_callback);
 	if (uv_mcp2515_init(&this->mcp2515, SPI0, SPI_SLAVE0,
 			MCP2515_INT, uv_memory_get_can_baudrate())) {
+		uv_terminal_enable();
 		printf("MCP2515 init failed\n");
 
 	}
