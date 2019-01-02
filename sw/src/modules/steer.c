@@ -31,10 +31,10 @@ void steer_conf_reset(steer_conf_st *this) {
 	this->out_conf.dec = DUAL_SOLENOID_DEC_MAX;
 	this->out_conf.invert = false;
 	this->out_conf.assembly_invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 2000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 2000;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 }
 
 

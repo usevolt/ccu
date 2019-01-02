@@ -209,7 +209,9 @@ void step(void* me) {
 				uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID) ||
 				(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
 				this->fsb.emcy ||
-				!this->fsb.seat_sw) {
+				!this->fsb.seat_sw ||
+				!this->fsb.door_sw1 ||
+				!this->fsb.door_sw2) {
 			// disable all outputs
 			steer_disable(&this->steer);
 			drive_disable(&this->drive);

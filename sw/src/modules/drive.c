@@ -30,28 +30,28 @@ void drive_conf_reset(drive_conf_st *this) {
 	this->gear_conf[CCU_GEAR_1].dec = DUAL_SOLENOID_DEC_MAX;
 	this->gear_conf[CCU_GEAR_1].invert = false;
 	this->gear_conf[CCU_GEAR_1].assembly_invert = false;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_1].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 
 	this->gear_conf[CCU_GEAR_2].acc = 30;
 	this->gear_conf[CCU_GEAR_2].dec = 25;
 	this->gear_conf[CCU_GEAR_2].invert = false;
 	this->gear_conf[CCU_GEAR_2].assembly_invert = false;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 
 	this->gear_conf[CCU_GEAR_3].acc = 30;
 	this->gear_conf[CCU_GEAR_3].dec = 0;
 	this->gear_conf[CCU_GEAR_3].invert = false;
 	this->gear_conf[CCU_GEAR_3].assembly_invert = false;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 100;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1000;
-	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 100;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1500;
+	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 }
 
 
@@ -158,10 +158,12 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 
 		// 3rd output is used only on first gear (4wd on LM & CM),
 		// when the loading space telescope is not moving
+		//
+		// 1st gear assembly invertion determines the direction of current for 1st valve
 		uv_dual_solenoid_output_set(&this->out3,
 				(this->gear == CCU_GEAR_1 &&
 						(telescope_get_current(&dev.telescope) == 0)) ?
-								-req : 0);
+								((this->conf->gear_conf[0].assembly_invert) ? -req : req) : 0);
 	}
 
 	// 4WD drive on first gear

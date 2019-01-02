@@ -31,10 +31,10 @@ void telescope_conf_reset(telescope_conf_st *this) {
 	this->out_conf.dec = 50;
 	this->out_conf.invert = true;
 	this->out_conf.assembly_invert = false;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 500;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 80;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 500;
-	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 80;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1200;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1200;
+	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 }
 
 
