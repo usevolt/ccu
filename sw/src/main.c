@@ -248,14 +248,16 @@ int main(void) {
 	uv_init(&dev);
 
 
-	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
-			&dev, UV_RTOS_IDLE_PRIORITY + 1, NULL);
-
 	uv_rtos_task_create(&mcp2515_step, "mcp2515", UV_RTOS_MIN_STACK_SIZE * 2,
 			&dev, UV_RTOS_IDLE_PRIORITY + 2, NULL);
 
 	uv_rtos_task_create(&solenoid_step, "solenoid", UV_RTOS_MIN_STACK_SIZE * 3,
 			&dev, UV_RTOS_IDLE_PRIORITY + 3, NULL);
+
+	// step task has to be the biggest since it is responsible for input handling
+	// and stopping the movements
+	uv_rtos_task_create(&step, "step", UV_RTOS_MIN_STACK_SIZE * 3,
+			&dev, UV_RTOS_IDLE_PRIORITY + 4, NULL);
 
 
 	uv_rtos_start_scheduler();
