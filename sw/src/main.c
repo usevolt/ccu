@@ -18,6 +18,7 @@
 #include <uv_rtos.h>
 #include <string.h>
 #include <uv_eeprom.h>
+#include <uv_wdt.h>
 
 dev_st dev = {};
 static bool initialized = false;
@@ -46,7 +47,7 @@ void can1_callback(void *user_ptr, uv_can_message_st* msg) {
 
 void init(dev_st* me) {
 	// load non-volatile data
-	if (uv_memory_load()) {
+	if (uv_memory_load(MEMORY_ALL_PARAMS)) {
 
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
@@ -157,7 +158,7 @@ void step(void* me) {
 	while (true) {
 		unsigned int step_ms = 20;
 		// update watchdog timer value to prevent a hard reset
-		// uw_wdt_update();
+		 uv_wdt_update();
 
 		// terminal step function
 		uv_terminal_step();
