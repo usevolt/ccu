@@ -131,33 +131,6 @@ X C2 2 200 0 100 L 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# kemet_T491D226K035AT
-#
-DEF kemet_T491D226K035AT C 0 40 N N 1 L N
-F0 "C" 0 -60 45 H V L BNN
-F1 "kemet_T491D226K035AT" 5 35 45 H V L BNN
-F2 "kemet:7343" 30 150 20 H I C CNN
-F3 "http://www.farnell.com/datasheets/2121523.pdf?_ga=1.259966538.1948984246.1460023966" 0 -60 60 H I C CNN
-F4 "399-8375-1-ND" 600 540 60 H I C CNN "2nd Source Part Number"
-F5 "Farnell" 300 240 60 H I C CNN "1st Source"
-F6 "T491D226K035AT" 200 140 60 H I C CNN "Manufacturer Part Number"
-F7 "Digikey" 500 440 60 H I C CNN "2nd Source"
-F8 "Kemet" 100 40 60 H I C CNN "Manufacturer"
-F9 "1457504" 400 340 60 H I C CNN "1st Source Part Number"
-$FPLIST
- *CAP_POL_SMD_10X10X10MM*
-$ENDFPLIST
-DRAW
-A 50 0 106 1351 -1351 1 1 0 N -25 75 -25 -75
-P 2 1 0 0 -142 50 -117 50 N
-P 2 1 0 0 -130 62 -130 37 N
-P 2 1 0 0 -95 75 -95 -75 N
-P 2 1 0 0 0 0 -50 0 N
-X + + -200 0 100 R 40 40 1 1 B
-X - - 100 0 100 L 40 40 1 1 B
-ENDDRAW
-ENDDEF
-#
 # power_+3V3
 #
 DEF power_+3V3 #PWR 0 0 Y Y 1 F P
@@ -340,6 +313,33 @@ F6 "EEE-FK1H470P" 200 140 60 H I C CNN "Manufacturer Part Number"
 F7 "Mouser" 500 440 60 H I C CNN "2nd Source"
 F8 "Panasonic Electronic Components" 100 40 60 H I C CNN "Manufacturer"
 F9 "PCE3815CT-ND" 400 340 60 H I C CNN "1st Source Part Number"
+$FPLIST
+ *CAP_POL_SMD_10X10X10MM*
+$ENDFPLIST
+DRAW
+A 50 0 106 1351 -1351 1 1 0 N -25 75 -25 -75
+P 2 1 0 0 -142 50 -117 50 N
+P 2 1 0 0 -130 62 -130 37 N
+P 2 1 0 0 -95 75 -95 -75 N
+P 2 1 0 0 0 0 -50 0 N
+X + + -200 0 100 R 40 40 1 1 B
+X - - 100 0 100 L 40 40 1 1 B
+ENDDRAW
+ENDDEF
+#
+# usevolt_CAP_TPSB107M006R0250
+#
+DEF usevolt_CAP_TPSB107M006R0250 C 0 40 N N 1 L N
+F0 "C" 0 -60 45 H V L BNN
+F1 "usevolt_CAP_TPSB107M006R0250" 5 35 45 H V L BNN
+F2 "usevolt:1210_CAP" 30 150 20 H I C CNN
+F3 "http://datasheets.avx.com/TPS.pdf" 0 -60 60 H I C CNN
+F4 "AVX Corporation" 100 40 60 H I C CNN "Manufacturer"
+F5 "TPSB107M006R0250" 200 140 60 H I C CNN "Manufacturer Part Number"
+F6 "Digi-Key" 300 240 60 H I C CNN "1st Source"
+F7 "478-4978-1-ND" 400 340 60 H I C CNN "1st Source Part Number"
+F8 "Mouser" 500 440 60 H I C CNN "2nd Source"
+F9 "581-TPSB107M006R0250" 600 540 60 H I C CNN "2nd Source Part Number"
 $FPLIST
  *CAP_POL_SMD_10X10X10MM*
 $ENDFPLIST

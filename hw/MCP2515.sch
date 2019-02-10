@@ -321,19 +321,19 @@ Wire Wire Line
 Wire Wire Line
 	7050 3700 6700 3700
 $Comp
-L kemet:T491D226K035AT C1
-U 1 1 5BE9F6AC
+L usevolt:CAP_TPSB107M006R0250 C1
+U 1 1 5C61AE74
 P 7050 3600
 F 0 "C1" V 6958 3703 45  0000 L CNN
-F 1 "T491D226K035AT" V 7042 3703 45  0000 L CNN
-F 2 "kemet:7343" H 7080 3750 20  0001 C CNN
-F 3 "http://www.farnell.com/datasheets/2121523.pdf?_ga=1.259966538.1948984246.1460023966" H 7050 3540 60  0001 C CNN
-F 4 "399-8375-1-ND" H 7650 4140 60  0001 C CNN "2nd Source Part Number"
-F 5 "Farnell" H 7350 3840 60  0001 C CNN "1st Source"
-F 6 "T491D226K035AT" H 7250 3740 60  0001 C CNN "Manufacturer Part Number"
-F 7 "Digikey" H 7550 4040 60  0001 C CNN "2nd Source"
-F 8 "Kemet" H 7150 3640 60  0001 C CNN "Manufacturer"
-F 9 "1457504" H 7450 3940 60  0001 C CNN "1st Source Part Number"
+F 1 "CAP_TPSB107M006R0250" V 7042 3703 45  0000 L CNN
+F 2 "usevolt:1210_CAP" H 7080 3750 20  0001 C CNN
+F 3 "http://datasheets.avx.com/TPS.pdf" H 7050 3540 60  0001 C CNN
+F 4 "AVX Corporation" H 7150 3640 60  0001 C CNN "Manufacturer"
+F 5 "TPSB107M006R0250" H 7250 3740 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Digi-Key" H 7350 3840 60  0001 C CNN "1st Source"
+F 7 "478-4978-1-ND" H 7450 3940 60  0001 C CNN "1st Source Part Number"
+F 8 "Mouser" H 7550 4040 60  0001 C CNN "2nd Source"
+F 9 "581-TPSB107M006R0250" H 7650 4140 60  0001 C CNN "2nd Source Part Number"
 	1    7050 3600
 	0    1    1    0   
 $EndComp
