@@ -47,7 +47,7 @@ void can1_callback(void *user_ptr, uv_can_message_st* msg) {
 
 void init(dev_st* me) {
 	// load non-volatile data
-	if (uv_memory_load(MEMORY_ALL_PARAMS)) {
+	if (uv_memory_load(MEMORY_APP_PARAMS)) {
 
 		this->dither_ampl = DITHER_AMPL_DEF;
 		this->dither_freq = DITHER_FREQ_DEF;
