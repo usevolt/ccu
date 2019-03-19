@@ -86,6 +86,10 @@ void init(dev_st* me) {
 
 	uv_eeprom_read(&this->assembly, sizeof(this->assembly), ASSEMBLY_EEPROM_ADDR);
 	this->assembly_write = 0;
+	if (this->assembly.gears_installed > CCU_GEAR_COUNT) {
+		this->assembly.gears_installed = CCU_GEAR_COUNT;
+		this->assembly_write = 1;
+	}
 
 
 	uv_gpio_init_output(MCP2515_RESET, true);

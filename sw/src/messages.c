@@ -307,7 +307,7 @@ const uv_command_st terminal_commands[] = {
 				.id = CMD_ASS,
 				.str = "ass",
 				.instructions = "Sets the assembly bits.\n"
-						"Usage: ass <\"cabrot\"/\"telescope\"> <value>",
+						"Usage: ass <\"cabrot\"/\"telescope\"/\"gears\"> <value>",
 				.callback = &ass_callb
 		}
 };
@@ -488,6 +488,9 @@ void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 		else if (strcmp(str, "telescope") == 0) {
 			this->assembly.telescope_installed = value;
 		}
+		else if (strcmp(str, "gears") == 0 && value <= CCU_GEAR_COUNT) {
+			this->assembly.gears_installed = value;
+		}
 		else {
 			match = false;
 		}
@@ -505,9 +508,11 @@ void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 
 	printf("Assembly variable:\n"
 			"   Cabrot: %u\n"
-			"   Telescope: %u\n",
+			"   Telescope: %u\n"
+			"   Installed gears: %u\n",
 			this->assembly.cabrot_installed,
-			this->assembly.telescope_installed);
+			this->assembly.telescope_installed,
+			this->assembly.gears_installed);
 }
 
 

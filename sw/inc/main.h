@@ -59,6 +59,7 @@ typedef struct _dev_st {
 	struct {
 		uint8_t cabrot_installed;
 		uint8_t telescope_installed;
+		uint8_t gears_installed;
 	} assembly;
 	uint8_t assembly_write;
 

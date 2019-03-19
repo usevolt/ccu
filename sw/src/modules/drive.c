@@ -101,7 +101,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 	int8_t g = input_pressed(&this->gear_req);
 	// increase gear
 	if (g > 0) {
-		if (this->gear < CCU_GEAR_COUNT - 1) {
+		if (this->gear < dev.assembly.gears_installed - 1) {
 			this->gear++;
 		}
 		else {
@@ -114,7 +114,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 			this->gear--;
 		}
 		else {
-			this->gear = CCU_GEAR_COUNT - 1;
+			this->gear = dev.assembly.gears_installed - 1;
 		}
 	}
 	else {
@@ -154,7 +154,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 
 		// 2nd output is used only with 2nd and 3rd gears
 		uv_dual_solenoid_output_set(&this->out2,
-				(this->gear == CCU_GEAR_1) ? 0 : req);
+				(this->gear < uv_mini(CCU_GEAR_2, dev.assembly.gears_installed - 1)) ? 0 : req);
 
 		// 3rd output is used only on first gear (4wd on LM & CM),
 		// when the loading space telescope is not moving
