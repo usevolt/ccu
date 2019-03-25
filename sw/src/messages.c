@@ -119,6 +119,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->drive.brake.current
 		},
 		{
+				.main_index = CCU_DRIVE_COMP_INDEX,
+				.array_max_size = CCU_DRIVE_COMP_ARRAY_MAX_SIZE,
+				.type = CCU_DRIVE_COMP_TYPE,
+				.permissions = CCU_DRIVE_COMP_PERMISSIONS,
+				.data_ptr = &this->drive_conf.comp
+		},
+		{
 				.main_index = CCU_CABROT_REQ_INDEX,
 				.sub_index = CCU_CABROT_REQ_SUBINDEX,
 				.type = CCU_CABROT_REQ_TYPE,

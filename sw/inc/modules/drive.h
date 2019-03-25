@@ -27,6 +27,10 @@
 /// @brief: Boom fold configuration settings. Should be stored in non-volatile memory
 typedef struct {
 	uv_dual_solenoid_output_conf_st gear_conf[CCU_GEAR_COUNT];
+	struct {
+		uint8_t f;
+		uint8_t b;
+	} comp;
 } drive_conf_st;
 
 /// @brief: Resets the non-volatile settings to defaults

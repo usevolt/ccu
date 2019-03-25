@@ -52,6 +52,9 @@ void drive_conf_reset(drive_conf_st *this) {
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1500;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
+
+	this->comp.f = 0;
+	this->comp.b = 0;
 }
 
 
@@ -62,6 +65,15 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 	this->gear = CCU_GEAR_1;
 	this->d4wd_req = OUTPUT_STATE_OFF;
 	this->cabdir = CCU_CABDIR_FORWARD;
+
+	if (this->conf->comp.b > 100 ||
+			this->conf->comp.b < -100) {
+		this->conf->comp.b = 0;
+	}
+	if (this->conf->comp.f > 100 ||
+			this->conf->comp.f < -100) {
+		this->conf->comp.f = 0;
+	}
 
 	uv_delay_init(&this->foot_down_emcy_delay, DRIVE_FOOT_DOWN_DELAY_MS);
 
@@ -160,10 +172,24 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 		// when the loading space telescope is not moving
 		//
 		// 1st gear assembly invertion determines the direction of current for 1st valve
+		// 3rd output controls the back wheels, thus apply the compensation
+		//
+		// apply the drive compensation
+		int16_t backreq = req;
+		backreq += backreq * ((backreq > 0) ? this->conf->comp.f : this->conf->comp.b) / 200;
+		if (backreq > 1000) {
+			backreq = 1000;
+		}
+		else if (backreq < -1000) {
+			backreq = -1000;
+		}
+		else {
+
+		}
 		uv_dual_solenoid_output_set(&this->out3,
 				(this->gear == CCU_GEAR_1 &&
 						(telescope_get_current(&dev.telescope) == 0)) ?
-								((this->conf->gear_conf[0].assembly_invert) ? -req : req) : 0);
+								((this->conf->gear_conf[0].assembly_invert) ? -backreq : backreq) : 0);
 	}
 
 	// 4WD drive on first gear
