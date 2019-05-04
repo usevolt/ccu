@@ -90,6 +90,13 @@ void init(dev_st* me) {
 		this->assembly.gears_installed = CCU_GEAR_COUNT;
 		this->assembly_write = 1;
 	}
+	else if (this->assembly.gears_installed == 0) {
+		this->assembly.gears_installed = 1;
+		this->assembly_write = 1;
+	}
+	else {
+
+	}
 
 
 	uv_gpio_init_output(MCP2515_RESET, true);
