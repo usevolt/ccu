@@ -95,7 +95,7 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 	uv_output_init(&this->brake, BRAKE_SENSE, BRAKE_OUT, VND5050_CURRENT_AMPL_UA,
 			4000, 5000, 50, CCU_EMCY_BRAKE_OVERLOAD, CCU_EMCY_BRAKE_FAULT);
 	uv_output_init(&this->gear3, GEAR3_SENSE, GEAR3_OUT, VN5E01_CURRENT_AMPL_UA,
-			4000, 8000, 50, CCU_EMCY_GEAR3_OVERLOAD, CCU_EMCY_GEAR3_FAULT);
+			8000, 12000, 50, CCU_EMCY_GEAR3_OVERLOAD, CCU_EMCY_GEAR3_FAULT);
 
 }
 
