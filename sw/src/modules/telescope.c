@@ -40,6 +40,7 @@ void telescope_conf_reset(telescope_conf_st *this) {
 
 void telescope_init(telescope_st *this, telescope_conf_st *conf_ptr) {
 	input_init(&this->input);
+	input_init(&this->bstr_input);
 	this->conf = conf_ptr;
 
 	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, TELESCOPE_PWMA,
@@ -56,6 +57,19 @@ void telescope_step(telescope_st *this, uint16_t step_ms) {
 
 		uv_dual_solenoid_output_set(&this->out,
 					input_get_request(&this->input, &this->conf->out_conf));
+	}
+	else if (dev.assembly.backsteer_installed) {
+		int16_t req = input_get_request(&this->bstr_input, &this->conf->out_conf);
+		if (cabrot_get_dir(&dev.cabrot) == CCU_CABDIR_BACKWARD) {
+			req *= -1;
+		}
+
+		// steering enabled only when driving
+		uv_dual_solenoid_output_set(&this->out,
+				(input_get_request(&dev.drive.input, &this->conf->out_conf)) ? req : 0);
+	}
+	else {
+		uv_dual_solenoid_output_set(&this->out, 0);
 	}
 }
 
