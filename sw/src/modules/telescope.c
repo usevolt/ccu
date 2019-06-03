@@ -76,7 +76,7 @@ void telescope_step(telescope_st *this, uint16_t step_ms) {
 
 
 void telescope_solenoid_step(telescope_st *this, uint16_t step_ms) {
-	if (dev.assembly.telescope_installed) {
+	if (dev.assembly.telescope_installed || dev.assembly.backsteer_installed) {
 		uv_dual_solenoid_output_step(&this->out, step_ms);
 	}
 }
