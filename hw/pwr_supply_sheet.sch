@@ -4,7 +4,7 @@ EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 13
+Sheet 2 14
 Title "Power supply"
 Date "2016-08-20"
 Rev "1"
@@ -444,19 +444,19 @@ Wire Wire Line
 	2550 2700 2900 2700
 Connection ~ 2900 2700
 $Comp
-L usevolt:CAP_TPSB107M006R0250 C2
-U 1 1 5C620853
+L usevolt:TPSD477M006R0100 C2
+U 1 1 5D04E64E
 P 6850 4050
 F 0 "C2" V 6758 4153 45  0000 L CNN
-F 1 "CAP_TPSB107M006R0250" V 6842 4153 45  0000 L CNN
-F 2 "usevolt:1210_CAP" H 6880 4200 20  0001 C CNN
+F 1 "TPSD477M006R0100" V 6842 4153 45  0000 L CNN
+F 2 "usevolt:7343" H 6880 4200 20  0001 C CNN
 F 3 "http://datasheets.avx.com/TPS.pdf" H 6850 3990 60  0001 C CNN
-F 4 "AVX Corporation" H 6950 4090 60  0001 C CNN "Manufacturer"
-F 5 "TPSB107M006R0250" H 7050 4190 60  0001 C CNN "Manufacturer Part Number"
-F 6 "Digi-Key" H 7150 4290 60  0001 C CNN "1st Source"
-F 7 "478-4978-1-ND" H 7250 4390 60  0001 C CNN "1st Source Part Number"
-F 8 "Mouser" H 7350 4490 60  0001 C CNN "2nd Source"
-F 9 "581-TPSB107M006R0250" H 7450 4590 60  0001 C CNN "2nd Source Part Number"
+F 4 "478-1790-1-ND" H 7450 4590 60  0001 C CNN "2nd Source Part Number"
+F 5 "Farnell" H 7150 4290 60  0001 C CNN "1st Source"
+F 6 "TPSD477M006R0100" H 7050 4190 60  0001 C CNN "Manufacturer Part Number"
+F 7 "Digikey" H 7350 4490 60  0001 C CNN "2nd Source"
+F 8 "AVX Corporation" H 6950 4090 60  0001 C CNN "Manufacturer"
+F 9 "2852793" H 7250 4390 60  0001 C CNN "1st Source Part Number"
 	1    6850 4050
 	0    1    1    0   
 $EndComp

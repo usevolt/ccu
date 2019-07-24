@@ -5,4 +5,5 @@
   (lib (name wurth_elektronik_LED)(type Legacy)(uri /home/usevolt/uv/kicad/libs/wurth_elektronik_LED.lib)(options "")(descr ""))
   (lib (name power)(type Legacy)(uri /home/usevolt/uv/kicad/libs/power.lib)(options "")(descr ""))
   (lib (name yageo)(type Legacy)(uri /home/usevolt/uv/kicad/libs/yageo.lib)(options "")(descr ""))
+  (lib (name ccu-rescue)(type Legacy)(uri ${KIPRJMOD}/ccu-rescue.lib)(options "")(descr ""))
 )

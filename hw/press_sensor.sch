@@ -1,0 +1,134 @@
+EESchema Schematic File Version 4
+LIBS:ccu-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 14 14
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L usevolt:R_75OHM R5
+U 1 1 5AC56A99
+P 6300 3850
+F 0 "R5" V 6247 3928 60  0000 L CNN
+F 1 "R_75OHM" V 6353 3928 60  0000 L CNN
+F 2 "usevolt:1206" H 6200 3950 60  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/2158849.pdf?_ga=1.165170815.1561825231.1484148445" H 6300 4050 60  0001 C CNN
+F 4 "1100161" H 6700 4450 60  0001 C CNN "1st Source Part Number"
+F 5 "WCR1206-75RFI" H 6500 4250 60  0001 C CNN "Manufacturer Part Number"
+F 6 "Farnell" H 6600 4350 60  0001 C CNN "1st Source"
+F 7 "WELWYN" H 6400 4150 60  0001 C CNN "Manufacturer"
+	1    6300 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0109
+U 1 1 5AC56B5B
+P 6300 4350
+F 0 "#PWR0109" H 6300 4100 50  0001 C CNN
+F 1 "GND" H 6305 4177 50  0000 C CNN
+F 2 "" H 6300 4350 50  0000 C CNN
+F 3 "" H 6300 4350 50  0000 C CNN
+	1    6300 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6300 4350 6300 4150
+$Comp
+L usevolt:FUSE_MC36211_350MA F1
+U 1 1 5AC56C74
+P 5700 2900
+F 0 "F1" H 5700 3104 45  0000 C CNN
+F 1 "FUSE_MC36211_350MA" H 5700 3020 45  0000 C CNN
+F 2 "usevolt:FUSE_MC36211" H 5730 3050 20  0001 C CNN
+F 3 "http://www.farnell.com/datasheets/1678471.pdf?_ga=1.218604761.1948984246.1460023966" H 5820 2920 60  0001 C CNN
+F 4 "Farnell" H 6120 3220 60  0001 C CNN "1st Source"
+F 5 "MC36211" H 6020 3120 60  0001 C CNN "Manufacturer Part Number"
+F 6 "MC36211" H 6220 3320 60  0001 C CNN "1st Source Part Number"
+F 7 "Multicomp" H 5920 3020 60  0001 C CNN "Manufacturer"
+	1    5700 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L yageo:10K R6
+U 1 1 5AC57BF4
+P 6600 3350
+F 0 "R6" H 6650 3534 45  0000 C CNN
+F 1 "10K" H 6650 3450 45  0000 C CNN
+F 2 "yageo:0603" H 6630 3500 20  0001 C CNN
+F 3 "" H 6569 3389 60  0001 C CNN
+F 4 "" H 6969 3789 60  0001 C CNN "1st Source Part Number"
+F 5 "Digikey" H 6869 3689 60  0001 C CNN "1st Source"
+F 6 "RC0603FR-0710KL" H 6769 3589 60  0001 C CNN "Manufacturer Part Number"
+F 7 "YAGEO" H 6669 3489 60  0001 C CNN "Manufacturer"
+	1    6600 3350
+	1    0    0    -1  
+$EndComp
+Text HLabel 7450 3350 2    60   Output ~ 0
+PRESS_SENSE
+Wire Wire Line
+	6500 3350 6300 3350
+Wire Wire Line
+	6300 3350 6300 3650
+Wire Wire Line
+	6300 3350 5200 3350
+Connection ~ 6300 3350
+$Comp
+L power:VDD #PWR0115
+U 1 1 5AC59DFD
+P 6300 2600
+F 0 "#PWR0115" H 6300 2450 50  0001 C CNN
+F 1 "VDD" H 6317 2773 50  0000 C CNN
+F 2 "" H 6300 2600 50  0000 C CNN
+F 3 "" H 6300 2600 50  0000 C CNN
+	1    6300 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6300 2600 6300 2900
+Wire Wire Line
+	6300 2900 5900 2900
+Wire Wire Line
+	5500 2900 5200 2900
+Text HLabel 5200 2900 0    60   Output ~ 0
+PRESS_VDD
+Text HLabel 5200 3350 0    60   Input ~ 0
+PRESS_IN
+Wire Wire Line
+	6800 3350 7050 3350
+$Comp
+L usevolt:ZENER_MM3Z3V6T1G D1
+U 1 1 5D10C96E
+P 7050 3550
+F 0 "D1" V 6975 3472 45  0000 R CNN
+F 1 "ZENER_MM3Z3V6T1G" H 7325 3925 45  0001 L BNN
+F 2 "usevolt:SOD-323" H 7025 3925 20  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/308/MM3Z2V4T1-D-269162.pdf" H 7400 4125 60  0001 C CNN
+F 4 "Mouser" H 7370 3870 60  0001 C CNN "1st Source"
+F 5 "MM3Z3V6T1G" H 7270 3770 60  0001 C CNN "Manufacturer Part Number"
+F 6 "863-MM3Z3V6T1G" H 7470 3970 60  0001 C CNN "1st Source Part Number"
+F 7 "ON Semiconductor" H 7325 4025 60  0001 C CNN "Manufacturer"
+	1    7050 3550
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	7050 3500 7050 3350
+Connection ~ 7050 3350
+Wire Wire Line
+	7050 3350 7450 3350
+Wire Wire Line
+	7050 3750 7050 4150
+Wire Wire Line
+	7050 4150 6300 4150
+Connection ~ 6300 4150
+Wire Wire Line
+	6300 4150 6300 4050
+$EndSCHEMATC
