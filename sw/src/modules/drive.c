@@ -199,7 +199,9 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 					OUTPUT_STATE_ON : OUTPUT_STATE_OFF;
 	// if loading space telescope is moving,
 	// d4wd is always ON to make sure the wheels can rotate freely
-	if (telescope_get_current(&dev.telescope)) {
+	// Note: On UW LM telescope output is used to control back steering,
+	// thus assembly.telescope_installed has to be checked
+	if (dev.assembly.telescope_installed && telescope_get_current(&dev.telescope)) {
 		this->d4wd_req = OUTPUT_STATE_ON;
 	}
 	// trigger the PDO transmission right away
@@ -217,7 +219,7 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 	uv_output_set_state(&this->gear3,
 			((uv_dual_solenoid_output_get_current(&this->out1) ||
 					uv_dual_solenoid_output_get_current(&this->out2)) &&
-					(this->gear == CCU_GEAR_3)) ?
+					(this->gear == CCU_GEAR_2)) ?
 							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
 
 }
