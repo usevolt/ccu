@@ -54,6 +54,13 @@ void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
 	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+
+	// steering is disabled if anyone of the support legs is down
+	if (dev.hcu.left_foot_state == HCU_FOOT_DOWN ||
+			dev.hcu.right_foot_state == HCU_FOOT_DOWN) {
+		req = 0;
+	}
+
 	if (cabrot_get_dir(&dev.cabrot) == CCU_CABDIR_BACKWARD) {
 		req *= -1;
 	}
