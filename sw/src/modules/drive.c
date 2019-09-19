@@ -216,11 +216,18 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
 
 	// control gear3 valve when driving with 3rd gear
-	uv_output_set_state(&this->gear3,
-			((uv_dual_solenoid_output_get_current(&this->out1) ||
-					uv_dual_solenoid_output_get_current(&this->out2)) &&
-					(this->gear == CCU_GEAR_2)) ?
-							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
+	uv_output_state_e onstate = (this->conf->gear_conf[2].assembly_invert) ?
+			OUTPUT_STATE_ON : OUTPUT_STATE_OFF;
+	uv_output_state_e offstate = (onstate == OUTPUT_STATE_ON) ?
+			OUTPUT_STATE_OFF : OUTPUT_STATE_ON;
+	if (uv_dual_solenoid_output_get_current(&this->out1) == 0 &&
+			uv_dual_solenoid_output_get_current(&this->out2) == 0) {
+		uv_output_set_state(&this->gear3, OUTPUT_STATE_OFF);
+	}
+	else {
+		uv_output_set_state(&this->gear3,
+				(this->gear == CCU_GEAR_2) ? onstate : offstate);
+	}
 
 }
 
