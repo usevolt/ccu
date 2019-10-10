@@ -18,7 +18,7 @@
 
 
 #define MCP2515_INT			P0_18
-#define MCP2515_RESET		P1_1
+#define MCP2515_RESET		P0_17
 
 
 #define STEER_PWMA			PWM2_3
