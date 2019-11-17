@@ -28,8 +28,8 @@
 typedef struct {
 	uv_dual_solenoid_output_conf_st gear_conf[CCU_GEAR_COUNT];
 	struct {
-		uint8_t f;
-		uint8_t b;
+		int8_t f;
+		int8_t b;
 	} comp;
 } drive_conf_st;
 
