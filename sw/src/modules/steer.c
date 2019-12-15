@@ -40,6 +40,8 @@ void steer_conf_reset(steer_conf_st *this) {
 
 void steer_init(steer_st *this, steer_conf_st *conf_ptr) {
 	input_init(&this->input);
+	input_init(&this->input2);
+	input_init(&this->input3);
 	this->conf = conf_ptr;
 
 	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, STEER_PWMA,
@@ -54,6 +56,12 @@ void steer_step(steer_st *this, uint16_t step_ms) {
 	input_step(&this->input, step_ms);
 
 	int16_t req = input_get_request(&this->input, &this->conf->out_conf);
+	if (req == 0) {
+		req = input_get_request(&this->input2, &this->conf->out_conf);
+	}
+	if (req == 0) {
+		req = -input_get_request(&this->input3, &this->conf->out_conf);
+	}
 
 	// steering is disabled if anyone of the support legs is down
 	if (dev.hcu.left_foot_state == HCU_FOOT_DOWN ||

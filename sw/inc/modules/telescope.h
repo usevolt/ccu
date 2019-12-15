@@ -36,6 +36,8 @@ typedef struct {
 	// input module from the CAN-bus
 	input_st input;
 	input_st bstr_input;
+	input_st bstr_input2;
+	input_st bstr_input3;
 
 	uv_dual_solenoid_output_st out;
 

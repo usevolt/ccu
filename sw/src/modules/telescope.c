@@ -41,6 +41,8 @@ void telescope_conf_reset(telescope_conf_st *this) {
 void telescope_init(telescope_st *this, telescope_conf_st *conf_ptr) {
 	input_init(&this->input);
 	input_init(&this->bstr_input);
+	input_init(&this->bstr_input2);
+	input_init(&this->bstr_input3);
 	this->conf = conf_ptr;
 
 	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, TELESCOPE_PWMA,
@@ -60,6 +62,12 @@ void telescope_step(telescope_st *this, uint16_t step_ms) {
 	}
 	else if (dev.assembly.backsteer_installed) {
 		int16_t req = input_get_request(&this->bstr_input, &this->conf->out_conf);
+		if (req == 0) {
+			req = input_get_request(&this->bstr_input2, &this->conf->out_conf);
+		}
+		if (req == 0) {
+			req = -input_get_request(&this->bstr_input3, &this->conf->out_conf);
+		}
 		// back steering is disabled if the support legs are down
 		if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
 				(dev.hcu.right_foot_state == HCU_FOOT_DOWN)) {

@@ -35,6 +35,8 @@ void steer_conf_reset(steer_conf_st *this);
 typedef struct {
 	// input module from the CAN-bus
 	input_st input;
+	input_st input2;
+	input_st input3;
 
 	uv_dual_solenoid_output_st out;
 

@@ -42,6 +42,20 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->steer.input.request
 		},
 		{
+				.main_index = CCU_STEER_2NDREQ_INDEX,
+				.sub_index = CCU_STEER_2NDREQ_SUBINDEX,
+				.type = CCU_STEER_2NDREQ_TYPE,
+				.permissions = CCU_STEER_2NDREQ_PERMISSIONS,
+				.data_ptr = &this->steer.input2.request
+		},
+		{
+				.main_index = CCU_STEER_3RDREQ_INDEX,
+				.sub_index = CCU_STEER_3RDREQ_SUBINDEX,
+				.type = CCU_STEER_3RDREQ_TYPE,
+				.permissions = CCU_STEER_3RDREQ_PERMISSIONS,
+				.data_ptr = &this->steer.input3.request
+		},
+		{
 				.main_index = CCU_STEER_PARAM_INDEX,
 				.sub_index = CCU_STEER_PARAM_ARRAY_MAX_SIZE,
 				.type = CCU_STEER_PARAM_TYPE,
@@ -187,6 +201,20 @@ canopen_object_st obj_dict[] = {
 				.type = CCU_BACKSTEER_REQ_TYPE,
 				.permissions = CCU_BACKSTEER_REQ_PERMISSIONS,
 				.data_ptr = &this->telescope.bstr_input.request
+		},
+		{
+				.main_index = CCU_BACKSTEER_2NDREQ_INDEX,
+				.sub_index = CCU_BACKSTEER_2NDREQ_SUBINDEX,
+				.type = CCU_BACKSTEER_2NDREQ_TYPE,
+				.permissions = CCU_BACKSTEER_2NDREQ_PERMISSIONS,
+				.data_ptr = &this->telescope.bstr_input2.request
+		},
+		{
+				.main_index = CCU_BACKSTEER_3RDREQ_INDEX,
+				.sub_index = CCU_BACKSTEER_3RDREQ_SUBINDEX,
+				.type = CCU_BACKSTEER_3RDREQ_TYPE,
+				.permissions = CCU_BACKSTEER_3RDREQ_PERMISSIONS,
+				.data_ptr = &this->telescope.bstr_input3.request
 		},
 		{
 				.main_index = CCU_BACKSTEER_PARAM_INDEX,
