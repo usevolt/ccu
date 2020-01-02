@@ -27,8 +27,8 @@
 
 
 void cabrot_conf_reset(cabrot_conf_st *this) {
-	this->out_conf.acc = 20;
-	this->out_conf.dec = 10;
+	this->out_conf.acc = 60;
+	this->out_conf.dec = 60;
 	this->out_conf.invert = false;
 	this->out_conf.assembly_invert = true;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 600;
