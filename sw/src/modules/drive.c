@@ -47,7 +47,7 @@ void drive_conf_reset(drive_conf_st *this) {
 	this->gear_conf[CCU_GEAR_3].acc = 30;
 	this->gear_conf[CCU_GEAR_3].dec = 0;
 	this->gear_conf[CCU_GEAR_3].invert = false;
-	this->gear_conf[CCU_GEAR_3].assembly_invert = false;
+	this->gear_conf[CCU_GEAR_3].assembly_invert = true;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1500;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].min_ma = 500;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].max_ma = 1500;
@@ -215,18 +215,22 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 					uv_dual_solenoid_output_get_current(&this->out2)) ?
 							OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
 
+
 	// control gear3 valve when driving with 3rd gear
 	uv_output_state_e onstate = (this->conf->gear_conf[2].assembly_invert) ?
 			OUTPUT_STATE_ON : OUTPUT_STATE_OFF;
 	uv_output_state_e offstate = (onstate == OUTPUT_STATE_ON) ?
 			OUTPUT_STATE_OFF : OUTPUT_STATE_ON;
-	if (uv_dual_solenoid_output_get_current(&this->out1) == 0 &&
-			uv_dual_solenoid_output_get_current(&this->out2) == 0) {
+	if (input_get_request(&this->input, &this->conf->gear_conf[this->gear]) == 0) {
 		uv_output_set_state(&this->gear3, OUTPUT_STATE_OFF);
 	}
 	else {
-		uv_output_set_state(&this->gear3,
-				(this->gear == CCU_GEAR_2) ? onstate : offstate);
+		if (this->gear == CCU_GEAR_3) {
+			uv_output_set_state(&this->gear3, onstate);
+		}
+		else {
+			uv_output_set_state(&this->gear3, offstate);
+		}
 	}
 
 }

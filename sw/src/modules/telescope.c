@@ -27,8 +27,8 @@
 
 
 void telescope_conf_reset(telescope_conf_st *this) {
-	this->out_conf.acc = 20;
-	this->out_conf.dec = 50;
+	this->out_conf.acc = 70;
+	this->out_conf.dec = 70;
 	this->out_conf.invert = true;
 	this->out_conf.assembly_invert = false;
 	this->out_conf.solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1200;
