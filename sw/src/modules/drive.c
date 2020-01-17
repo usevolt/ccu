@@ -45,7 +45,7 @@ void drive_conf_reset(drive_conf_st *this) {
 	this->gear_conf[CCU_GEAR_2].solenoid_conf[DUAL_OUTPUT_SOLENOID_B].min_ma = 500;
 
 	this->gear_conf[CCU_GEAR_3].acc = 30;
-	this->gear_conf[CCU_GEAR_3].dec = 0;
+	this->gear_conf[CCU_GEAR_3].dec = 25;
 	this->gear_conf[CCU_GEAR_3].invert = false;
 	this->gear_conf[CCU_GEAR_3].assembly_invert = true;
 	this->gear_conf[CCU_GEAR_3].solenoid_conf[DUAL_OUTPUT_SOLENOID_A].max_ma = 1500;
