@@ -16,6 +16,7 @@
 #include "can_hcu.h"
 #include "can_keypad.h"
 #include "can_pedal.h"
+#include "pin_mappings.h"
 
 /**** USER CONFIGURATIONS ****/
 
@@ -56,9 +57,9 @@
 #define CONFIG_SPI0_BAUDRATE						10000000
 #define CONFIG_SPI0_MOSI_IO							P0_11
 #define CONFIG_SPI0_MISO_IO							P0_12
-#define CONFIG_SPI0_SCK_IO							P1_8
+#define CONFIG_SPI0_SCK_IO							SPI_CLK_IO
 #define CONFIG_SPI0_SLAVE_COUNT						1
-#define CONFIG_SPI0_SSEL0_IO						P1_7
+#define CONFIG_SPI0_SSEL0_IO						SPI_CS_IO
 #define CONFIG_SPI0_SSEL0_INV						0
 #define CONFIG_SPI0_MSB_FIRST						1
 #define CONFIG_SPI0_PREDELAY						1

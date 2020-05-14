@@ -10,15 +10,24 @@
 #ifndef UW_MB_SRC_PIN_MAPPINGS_H_
 #define UW_MB_SRC_PIN_MAPPINGS_H_
 
-#include <uv_gpio.h>
-#include <uv_timer.h>
-#include <uv_adc.h>
-#include <uv_pwm.h>
 
+//#define PCB_1_5
+#define PCB_1_4
+
+#if defined(PCB_1_5)
+#define MCP2515_RESET		P0_17
+#define SPI_CS_IO			P1_7
+#define SPI_CLK_IO			P1_8
+#elif defined(PCB_1_4)
+#define MCP2515_RESET		P1_1
+#define SPI_CS_IO			P0_9
+#define SPI_CLK_IO			P0_10
+#else
+#error "Unknown PCB definition"
+#endif
 
 
 #define MCP2515_INT			P0_18
-#define MCP2515_RESET		P0_17
 
 
 #define STEER_PWMA			PWM2_3
