@@ -11,8 +11,8 @@
 #define UW_MB_SRC_PIN_MAPPINGS_H_
 
 
-//#define PCB_1_5
-#define PCB_1_4
+#define PCB_1_5
+//#define PCB_1_4
 
 #if defined(PCB_1_5)
 #define MCP2515_RESET		P0_17
