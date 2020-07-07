@@ -30,6 +30,9 @@
 #define MCP2515_INT			P0_18
 
 
+#define AIN1_IO				P0_9
+#define AIN2_IO				P0_10
+
 #define STEER_PWMA			PWM2_3
 #define STEER_PWMB			PWM0_0
 #define STEER_SENSE			ADC0_0

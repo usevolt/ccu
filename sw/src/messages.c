@@ -274,6 +274,27 @@ canopen_object_st obj_dict[] = {
 				.permissions = CCU_ASSEMBLY_WRITE_PERMISSIONS,
 				.data_ptr = &this->assembly_write
 		},
+		{
+				.main_index = CCU_IMPL2_AIN1_REQ_INDEX,
+				.sub_index = CCU_IMPL2_AIN1_REQ_SUBINDEX,
+				.type = CCU_IMPL2_AIN1_REQ_TYPE,
+				.permissions = CCU_IMPL2_AIN1_REQ_PERMISSIONS,
+				.data_ptr = &this->impl2_ain1_req
+		},
+		{
+				.main_index = CCU_IMPL2_AIN2_REQ_INDEX,
+				.sub_index = CCU_IMPL2_AIN2_REQ_SUBINDEX,
+				.type = CCU_IMPL2_AIN2_REQ_TYPE,
+				.permissions = CCU_IMPL2_AIN2_REQ_PERMISSIONS,
+				.data_ptr = &this->impl2_ain2_req
+		},
+		{
+				.main_index = CCU_IMPL2_REQ_INDEX,
+				.sub_index = CCU_IMPL2_REQ_SUBINDEX,
+				.type = CCU_IMPL2_REQ_TYPE,
+				.permissions = CCU_IMPL2_REQ_PERMISSIONS,
+				.data_ptr = &this->impl2_req
+		},
 
 		{
 				.main_index = CCU_HCU_INDEX_OFFSET + HCU_IMPLEMENT_INDEX,
@@ -384,6 +405,10 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 	printf("Boom VDD state: %u, current: %u mA\n",
 			uv_output_get_state(&this->boom_vdd),
 			uv_output_get_current(&this->boom_vdd));
+	printf("AIN1 req: %i, AIN2 req: %i, IMPL2 req: %i\n",
+			this->impl2_ain1_req,
+			this->impl2_ain2_req,
+			this->impl2_req);
 	printf("emcy: %u, seat sw: %u, ignkey state: %u, fsb heartbeat expired: %u\n",
 			this->fsb.emcy, this->fsb.seat_sw, this->fsb.ignkey_state,
 			uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID));

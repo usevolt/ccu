@@ -58,6 +58,9 @@ void init(dev_st* me) {
 		telescope_conf_reset(&this->telescope_conf);
 
 
+		this->impl2_ain1_req = INT8_MAX / 2;
+		this->impl2_ain2_req = INT8_MAX;
+
 		// initialize non-volatile memory to default settings
 		uv_memory_save();
 	}
@@ -98,6 +101,9 @@ void init(dev_st* me) {
 
 	}
 
+	uv_gpio_init_input(AIN1_IO, PULL_DOWN_ENABLED);
+	uv_gpio_init_input(AIN2_IO, PULL_DOWN_ENABLED);
+	this->impl2_req = 0;
 
 	uv_gpio_init_output(MCP2515_RESET, true);
 
@@ -196,6 +202,16 @@ void step(void* me) {
 		drive_step(&this->drive, step_ms);
 		cabrot_step(&this->cabrot, step_ms);
 		telescope_step(&this->telescope, step_ms);
+
+		if (uv_gpio_get(AIN2_IO)) {
+			this->impl2_req = this->impl2_ain2_req;
+		}
+		else if (uv_gpio_get(AIN1_IO)) {
+			this->impl2_req = this->impl2_ain1_req;
+		}
+		else {
+			this->impl2_req = 0;
+		}
 
 		uv_output_set_state(&this->boom_vdd,
 				(this->hcu.implement == HCU_IMPLEMENT_UW180S) ?

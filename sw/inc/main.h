@@ -78,6 +78,9 @@ typedef struct _dev_st {
 	} hcu;
 	pedal_st pedal;
 
+	// the current oil req
+	int8_t impl2_req;
+
 	// non-volatile data start
 	uv_data_start_t data_start;
 
@@ -88,6 +91,11 @@ typedef struct _dev_st {
 	drive_conf_st drive_conf;
 	cabrot_conf_st cabrot_conf;
 	telescope_conf_st telescope_conf;
+
+	// the amount of oil request from impl2 when ain1 is high
+	int8_t impl2_ain1_req;
+	// the amount of oil request from impl2 when ain2 is high
+	int8_t impl2_ain2_req;
 
 	uv_data_end_t data_end;
 
