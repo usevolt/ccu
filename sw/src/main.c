@@ -242,7 +242,17 @@ void step(void* me) {
 				!this->fsb.door_sw2) {
 			// disable all outputs
 			steer_disable(&this->steer);
-			drive_disable(&this->drive);
+			if (uv_canopen_heartbeat_producer_is_expired(FSB_NODE_ID) ||
+					uv_canopen_heartbeat_producer_is_expired(LKEYPAD_NODE_ID) ||
+					uv_canopen_heartbeat_producer_is_expired(RKEYPAD_NODE_ID) ||
+					(this->fsb.ignkey_state != FSB_IGNKEY_STATE_ON) ||
+					this->fsb.emcy) {
+				drive_disable(&this->drive);
+			}
+			else {
+				// on door and seat switches the drive is disabled softly
+				drive_disable_soft(&this->drive);
+			}
 			cabrot_disable(&this->cabrot);
 			telescope_disable(&this->telescope);
 			// boom VDD is disabled only because of ignkey or emcy switch

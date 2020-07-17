@@ -161,6 +161,11 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 			req *= (this->cabdir == CCU_CABDIR_BACKWARD) ? -1 : 1;
 		}
 
+		// if soft request is active, drive the output to zero
+		if (this->disable_soft) {
+			req = 0;
+		}
+
 		// driving normally
 		uv_dual_solenoid_output_set(&this->out1, req);
 

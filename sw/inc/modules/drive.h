@@ -64,6 +64,8 @@ typedef struct {
 	ccu_gear_e gear;
 	input_st gear_req;
 
+	bool disable_soft;
+
 	// request for 4wd drive on first gear to HCU
 	uv_output_state_e d4wd_req;
 
@@ -126,6 +128,11 @@ static inline void drive_disable(drive_st *this) {
 	uv_output_disable(&this->brake);
 	uv_output_disable(&this->gear3);
 	this->input.request = 0;
+	this->disable_soft = false;
+}
+
+static inline void drive_disable_soft(drive_st *this) {
+	this->disable_soft = true;
 }
 
 
@@ -136,6 +143,7 @@ static inline void drive_enable(drive_st *this) {
 	uv_dual_solenoid_output_enable(&this->out3);
 	uv_output_enable(&this->brake);
 	uv_output_enable(&this->gear3);
+	this->disable_soft = false;
 }
 
 
