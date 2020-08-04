@@ -124,8 +124,8 @@ void solenoid_step(void* me) {
 	while (true) {
 		uint32_t step_ms = 2;
 
-		steer_solenoid_step(&this->steer, step_ms);
 		drive_solenoid_step(&this->drive, step_ms);
+		steer_solenoid_step(&this->steer, step_ms);
 		cabrot_solenoid_step(&this->cabrot, step_ms);
 		telescope_solenoid_step(&this->telescope, step_ms);
 
@@ -179,10 +179,17 @@ void step(void* me) {
 
 		pedal_step(&this->pedal);
 
-		// set driving input from pedal
-		drive_set_request(&this->drive, pedal_get_request(&this->pedal));
-		steer_step(&this->steer, step_ms);
+		// if either of the legs are down, drive request is set to zero
+		if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
+				(dev.hcu.right_foot_state == HCU_FOOT_DOWN)) {
+			drive_set_request(&this->drive, 0);
+		}
+		else {
+			// set driving input from pedal
+			drive_set_request(&this->drive, pedal_get_request(&this->pedal));
+		}
 		drive_step(&this->drive, step_ms);
+		steer_step(&this->steer, step_ms);
 		cabrot_step(&this->cabrot, step_ms);
 		telescope_step(&this->telescope, step_ms);
 

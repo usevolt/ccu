@@ -121,50 +121,31 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 
 	}
 
-	// prevent driving when legs are down
-	if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
-			(dev.hcu.right_foot_state == HCU_FOOT_DOWN)) {
-
-		if (input_get_request(&this->input, &this->conf->gear_conf[this->gear]) &&
-				uv_delay_has_ended(&this->foot_down_emcy_delay)) {
-
-			uv_canopen_emcy_send(CANOPEN_EMCY_DEVICE_SPECIFIC,
-					(dev.hcu.left_foot_state == HCU_FOOT_DOWN) ?
-							CCU_EMCY_DRIVING_LEFT_FOOT_DOWN :
-							CCU_EMCY_DRIVING_RIGHT_FOOT_DOWN);
-			uv_delay_init(&this->foot_down_emcy_delay, DRIVE_FOOT_DOWN_DELAY_MS);
-		}
-		uv_dual_solenoid_output_set(&this->out1, 0);
-		uv_dual_solenoid_output_set(&this->out2, 0);
-		uv_dual_solenoid_output_set(&this->out3, 0);
+	// invert driving direction if the cab is rotated
+	int16_t req = input_get_request(&this->input, &this->conf->gear_conf[this->gear]);
+	if (req == 0) {
+		// cab dir is updated only when driving is stopped
+		this->cabdir = cabrot_get_dir(&dev.cabrot);
 	}
 	else {
-		// invert driving direction if the cab is rotated
-		int16_t req = input_get_request(&this->input, &this->conf->gear_conf[this->gear]);
-		if (req == 0) {
-			// cab dir is updated only when driving is stopped
-			this->cabdir = cabrot_get_dir(&dev.cabrot);
-		}
-		else {
-			req *= (this->cabdir == CCU_CABDIR_BACKWARD) ? -1 : 1;
-		}
-
-		// driving normally
-		uv_dual_solenoid_output_set(&this->out1, req);
-
-		// 2nd output is used only with 2nd and 3rd gears
-		uv_dual_solenoid_output_set(&this->out2,
-				(this->gear == CCU_GEAR_1) ? 0 : req);
-
-		// 3rd output is used only on first gear (4wd on LM & CM),
-		// when the loading space telescope is not moving
-		//
-		// 1st gear assembly invertion determines the direction of current for 1st valve
-		uv_dual_solenoid_output_set(&this->out3,
-				(this->gear == CCU_GEAR_1 &&
-						(telescope_get_current(&dev.telescope) == 0)) ?
-								((this->conf->gear_conf[0].assembly_invert) ? -req : req) : 0);
+		req *= (this->cabdir == CCU_CABDIR_BACKWARD) ? -1 : 1;
 	}
+
+	// driving normally
+	uv_dual_solenoid_output_set(&this->out1, req);
+
+	// 2nd output is used only with 2nd and 3rd gears
+	uv_dual_solenoid_output_set(&this->out2,
+			(this->gear == CCU_GEAR_1) ? 0 : req);
+
+	// 3rd output is used only on first gear (4wd on LM & CM),
+	// when the loading space telescope is not moving
+	//
+	// 1st gear assembly invertion determines the direction of current for 1st valve
+	uv_dual_solenoid_output_set(&this->out3,
+			(this->gear == CCU_GEAR_1 &&
+					(telescope_get_current(&dev.telescope) == 0)) ?
+							((this->conf->gear_conf[0].assembly_invert) ? -req : req) : 0);
 
 	// 4WD drive on first gear
 	this->d4wd_req = (uv_dual_solenoid_output_get_current(&this->out1) &&
