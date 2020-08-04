@@ -197,7 +197,13 @@ void step(void* me) {
 		pedal_step(&this->pedal);
 
 		// set driving input from pedal
-		drive_set_request(&this->drive, pedal_get_request(&this->pedal));
+		if (this->hcu.left_foot_state == HCU_FOOT_DOWN ||
+				this->hcu.right_foot_state == HCU_FOOT_DOWN) {
+			drive_set_request(&this->drive, 0);
+		}
+		else {
+			drive_set_request(&this->drive, pedal_get_request(&this->pedal));
+		}
 		steer_step(&this->steer, step_ms);
 		drive_step(&this->drive, step_ms);
 		cabrot_step(&this->cabrot, step_ms);
