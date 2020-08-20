@@ -67,7 +67,7 @@ void cabrot_step(cabrot_st *this, uint16_t step_ms) {
 		uv_dual_solenoid_output_set(&this->out,
 					input_get_request(&this->input, &this->conf->out_conf));
 
-		ccu_cabdir_e new_dir;
+		ccu_cabdir_e new_dir = this->dir;
 		if (uv_dual_solenoid_output_get_current(&this->out) > 0) {
 			new_dir = CCU_CABDIR_FORWARD;
 		}
