@@ -37,6 +37,7 @@
 
 
 #define ASSEMBLY_EEPROM_ADDR		0
+#define CABDIR_EEPROM_ADDR			(ASSEMBLY_EEPROM_ADDR + 1)
 
 /// @brief: main data structure.
 /// This struct can be save to non-volatile flash memory with

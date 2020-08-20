@@ -24,9 +24,11 @@
 #include "main.h"
 #include "pin_mappings.h"
 #include "drive.h"
+#include <uv_eeprom.h>
 
 
 void cabrot_conf_reset(cabrot_conf_st *this) {
+
 	this->out_conf.acc = 60;
 	this->out_conf.dec = 60;
 	this->out_conf.invert = false;
@@ -41,7 +43,10 @@ void cabrot_conf_reset(cabrot_conf_st *this) {
 void cabrot_init(cabrot_st *this, cabrot_conf_st *conf_ptr) {
 	input_init(&this->input);
 	this->conf = conf_ptr;
-	this->dir = CCU_CABDIR_FORWARD;
+	uv_eeprom_read(&this->dir, sizeof(this->dir), CABDIR_EEPROM_ADDR);
+	if (this->dir >= CCU_CABDIR_COUNT) {
+		this->dir = CCU_CABDIR_BACKWARD;
+	}
 
 	uv_dual_solenoid_output_init(&this->out, &conf_ptr->out_conf, CABROT_PWMA,
 			CABROT_PWMB, CABROT_SENSE, dev.dither_freq, dev.dither_ampl,
@@ -62,18 +67,24 @@ void cabrot_step(cabrot_st *this, uint16_t step_ms) {
 		uv_dual_solenoid_output_set(&this->out,
 					input_get_request(&this->input, &this->conf->out_conf));
 
+		ccu_cabdir_e new_dir;
 		if (uv_dual_solenoid_output_get_current(&this->out) > 0) {
-			this->dir = CCU_CABDIR_FORWARD;
+			new_dir = CCU_CABDIR_FORWARD;
 		}
 		else if (uv_dual_solenoid_output_get_current(&this->out) < 0) {
-			this->dir = CCU_CABDIR_BACKWARD;
+			new_dir = CCU_CABDIR_BACKWARD;
 		}
 		else {
 
 		}
+		if (this->dir != new_dir) {
+			uv_eeprom_write(&new_dir, sizeof(new_dir), CABDIR_EEPROM_ADDR);
+			this->dir = new_dir;
+		}
 
 		uv_output_set_state(&this->cabbrake, uv_dual_solenoid_output_get_current(&this->out) ?
 				OUTPUT_STATE_ON : OUTPUT_STATE_OFF);
+
 	}
 }
 
