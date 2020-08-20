@@ -37,7 +37,7 @@
 
 
 #define ASSEMBLY_EEPROM_ADDR		0
-#define CABDIR_EEPROM_ADDR			(ASSEMBLY_EEPROM_ADDR + 1)
+#define CABDIR_EEPROM_ADDR			(ASSEMBLY_EEPROM_ADDR + sizeof(dev.assembly))
 
 /// @brief: main data structure.
 /// This struct can be save to non-volatile flash memory with
@@ -101,6 +101,7 @@ typedef struct _dev_st {
 	uv_data_end_t data_end;
 
 } dev_st;
+
 
 
 extern dev_st dev;

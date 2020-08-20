@@ -341,7 +341,7 @@ const uv_command_st terminal_commands[] = {
 				.str = "set",
 				.instructions = "Sets the configurations for output modules.\n"
 						"Usage: set <\"str\"/\"g1\"/\"g2\"/\"g3\"/\"cabrot\"/\"telescope\"> "
-						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\"/\"sysinvert\">"
+						"<\"maxa\"/\"maxb\"/\"mina\"/\"minb\"/\"acc\"/\"dec\"/\"invert\"/\"assinv\">"
 						"<value>",
 				.callback = &set_callb
 		},
