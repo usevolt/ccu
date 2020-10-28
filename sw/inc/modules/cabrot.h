@@ -23,6 +23,9 @@
 #include <uv_dual_solenoid_output.h>
 #include "input.h"
 
+
+#define CABROT_MAX_PRESSURE		130
+
 /// @brief: Boom fold configuration settings. Should be stored in non-volatile memory
 typedef struct {
 	uv_dual_solenoid_output_conf_st out_conf;
@@ -32,6 +35,13 @@ typedef struct {
 void cabrot_conf_reset(cabrot_conf_st *this);
 
 
+typedef enum {
+	CABROT_STATE_NORMAL = 0,
+	CABROT_STATE_OVERPRESSURE,
+	CABROT_STATE_COUNT
+} cabrot_state_e;
+
+
 typedef struct {
 	// input module from the CAN-bus
 	input_st input;
@@ -39,6 +49,8 @@ typedef struct {
 	uv_dual_solenoid_output_st out;
 
 	uv_output_st cabbrake;
+
+	cabrot_state_e state;
 
 	cabrot_conf_st *conf;
 

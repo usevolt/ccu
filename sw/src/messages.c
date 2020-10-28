@@ -316,6 +316,13 @@ canopen_object_st obj_dict[] = {
 				.type = HCU_RIGHT_FOOT_STATE_TYPE,
 				.permissions = HCU_RIGHT_FOOT_STATE_PERMISSIONS,
 				.data_ptr = &this->hcu.right_foot_state
+		},
+		{
+				.main_index = CCU_HCU_INDEX_OFFSET + HCU_PRESSURE_INDEX,
+				.sub_index = HCU_PRESSURE_SUBINDEX,
+				.type = HCU_PRESSURE_TYPE,
+				.permissions = CANOPEN_RW,
+				.data_ptr = &this->hcu.pressure
 		}
 };
 

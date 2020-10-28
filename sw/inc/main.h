@@ -76,6 +76,7 @@ typedef struct _dev_st {
 		hcu_impls_e implement;
 		hcu_foot_state_e left_foot_state;
 		hcu_foot_state_e right_foot_state;
+		uint16_t pressure;
 	} hcu;
 	pedal_st pedal;
 

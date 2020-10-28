@@ -43,6 +43,7 @@ void cabrot_conf_reset(cabrot_conf_st *this) {
 void cabrot_init(cabrot_st *this, cabrot_conf_st *conf_ptr) {
 	input_init(&this->input);
 	this->conf = conf_ptr;
+	this->state = CABROT_STATE_OFF;
 	uv_eeprom_read(&this->dir, sizeof(this->dir), CABDIR_EEPROM_ADDR);
 	if (this->dir >= CCU_CABDIR_COUNT) {
 		this->dir = CCU_CABDIR_BACKWARD;
@@ -63,6 +64,19 @@ void cabrot_init(cabrot_st *this, cabrot_conf_st *conf_ptr) {
 void cabrot_step(cabrot_st *this, uint16_t step_ms) {
 	if (dev.assembly.cabrot_installed) {
 		input_step(&this->input, step_ms);
+
+		int32_t req = input_get_request(&this->input);
+		if (req == 0) {
+			this->state = CABROT_STATE_NORMAL;
+		}
+		else {
+			if (dev.hcu.pressure > CABROT_MAX_PRESSURE) {
+				this->state = CABROT_STATE_OVERPRESSURE;
+			}
+		}
+		if (this->state == CABROT_STATE_OVERPRESSURE) {
+			req = 0;
+		}
 
 		uv_dual_solenoid_output_set(&this->out,
 					input_get_request(&this->input, &this->conf->out_conf));

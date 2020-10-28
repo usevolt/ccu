@@ -77,6 +77,7 @@ void init(dev_st* me) {
 	this->hcu.left_foot_state = HCU_FOOT_DOWN;
 	this->hcu.right_foot_state = HCU_FOOT_DOWN;
 	this->hcu.implement = HCU_IMPLEMENT_UW180S;
+	this->hcu.pressure = 0;
 
 	steer_init(&this->steer, &this->steer_conf);
 	drive_init(&this->drive, &this->drive_conf);
