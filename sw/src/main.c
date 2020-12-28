@@ -73,6 +73,10 @@ void init(dev_st* me) {
 	this->fsb.seat_sw = 0;
 	this->fsb.emcy = 0;
 	this->fsb.ignkey_state = FSB_IGNKEY_STATE_OFF;
+	this->work_active = 0;
+	uv_delay_init(&this->work_delay, WORK_DELAY_MS);
+	this->drive_active = 0;
+	uv_delay_init(&this->drive_delay, DRIVE_DELAY_MS);
 
 	this->hcu.left_foot_state = HCU_FOOT_DOWN;
 	this->hcu.right_foot_state = HCU_FOOT_DOWN;
@@ -209,6 +213,35 @@ void step(void* me) {
 		drive_step(&this->drive, step_ms);
 		cabrot_step(&this->cabrot, step_ms);
 		telescope_step(&this->telescope, step_ms);
+
+		// work active
+		uv_delay(&this->work_delay, step_ms);
+		if (steer_get_active(&this->steer) |
+				cabrot_get_active(&this->cabrot) |
+				telescope_get_active(&this->telescope) |
+				drive_get_active(&this->drive)) {
+			this->work_active = true;
+			uv_delay_init(&this->work_delay, WORK_DELAY_MS);
+		}
+		else if (uv_delay_has_ended(&this->work_delay)) {
+			this->work_active = false;
+		}
+		else {
+
+		}
+
+		// drive active
+		uv_delay(&this->drive_delay, step_ms);
+		if (drive_get_active(&this->drive)) {
+			this->drive_active = true;
+			uv_delay_init(&this->drive_delay, DRIVE_DELAY_MS);
+		}
+		else if (uv_delay_has_ended(&this->drive_delay)) {
+			this->drive_active = false;
+		}
+		else {
+
+		}
 
 		if (uv_gpio_get(AIN2_IO)) {
 			this->impl2_req = this->impl2_ain2_req;

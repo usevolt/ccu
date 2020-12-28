@@ -35,6 +35,20 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->total_current
 		},
 		{
+				.main_index = CCU_WORK_ACTIVE_INDEX,
+				.sub_index = CCU_WORK_ACTIVE_SUBINDEX,
+				.type = CCU_WORK_ACTIVE_TYPE,
+				.permissions = CCU_WORK_ACTIVE_PERMISSIONS,
+				.data_ptr = &this->work_active
+		},
+		{
+				.main_index = CCU_DRIVE_ACTIVE_INDEX,
+				.sub_index = CCU_DRIVE_ACTIVE_SUBINDEX,
+				.type = CCU_DRIVE_ACTIVE_TYPE,
+				.permissions = CCU_DRIVE_ACTIVE_PERMISSIONS,
+				.data_ptr = &this->drive_active
+		},
+		{
 				.main_index = CCU_STEER_REQ_INDEX,
 				.sub_index = CCU_STEER_REQ_SUBINDEX,
 				.type = CCU_STEER_REQ_TYPE,

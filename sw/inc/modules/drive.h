@@ -104,6 +104,14 @@ static inline int16_t drive_get_gear3_current(drive_st *this) {
 	return uv_output_get_current(&this->gear3);
 }
 
+
+static inline bool drive_get_active(drive_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out1) |
+			!!uv_dual_solenoid_output_get_target(&this->out2) |
+			!!uv_dual_solenoid_output_get_target(&this->out3);
+}
+
+
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
 static inline void drive_solenoid_step(drive_st *this, uint16_t step_ms) {

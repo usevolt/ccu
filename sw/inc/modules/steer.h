@@ -63,6 +63,11 @@ static inline void steer_solenoid_step(steer_st *this, uint16_t step_ms) {
 
 
 
+static inline bool steer_get_active(steer_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 
 /// @brief: Disables the boom fold module
 static inline void steer_disable(steer_st *this) {

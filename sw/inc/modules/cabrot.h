@@ -81,6 +81,9 @@ static inline int16_t cabrot_get_current(cabrot_st *this) {
 void cabrot_solenoid_step(cabrot_st *this, uint16_t step_ms);
 
 
+static inline bool cabrot_get_active(cabrot_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
 
 
 /// @brief: Disables the boom fold module

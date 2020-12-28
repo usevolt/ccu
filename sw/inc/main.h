@@ -36,6 +36,10 @@
 #define BOOM_VDD_AVG_COUNT			10
 
 
+#define WORK_DELAY_MS				5000
+#define DRIVE_DELAY_MS				1000
+
+
 #define ASSEMBLY_EEPROM_ADDR		0
 #define CABDIR_EEPROM_ADDR			(ASSEMBLY_EEPROM_ADDR + sizeof(dev.assembly))
 
@@ -82,6 +86,10 @@ typedef struct _dev_st {
 
 	// the current oil req
 	int8_t impl2_req;
+	uint8_t work_active;
+	uv_delay_st work_delay;
+	uint8_t drive_active;
+	uv_delay_st drive_delay;
 
 	// non-volatile data start
 	uv_data_start_t data_start;

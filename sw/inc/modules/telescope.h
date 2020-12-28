@@ -56,6 +56,12 @@ static inline int16_t telescope_get_current(telescope_st *this) {
 	return uv_dual_solenoid_output_get_current(&this->out);
 }
 
+
+static inline bool telescope_get_active(telescope_st *this) {
+	return !!uv_dual_solenoid_output_get_target(&this->out);
+}
+
+
 /// @brief: Step function for the solenoid driver module. Should be called
 /// with a smaller step cycle from a higher priority thread than the main module.
 void telescope_solenoid_step(telescope_st *this, uint16_t step_ms);
