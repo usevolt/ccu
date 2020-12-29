@@ -76,6 +76,7 @@ void cabrot_step(cabrot_st *this, uint16_t step_ms) {
 		}
 		if (this->state == CABROT_STATE_OVERPRESSURE) {
 			req = 0;
+			uv_dual_solenoid_output_disable(&this->out);
 		}
 
 		uv_dual_solenoid_output_set(&this->out, req);

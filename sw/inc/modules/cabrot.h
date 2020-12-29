@@ -24,7 +24,7 @@
 #include "input.h"
 
 
-#define CABROT_MAX_PRESSURE		130
+#define CABROT_MAX_PRESSURE		80
 
 /// @brief: Boom fold configuration settings. Should be stored in non-volatile memory
 typedef struct {
