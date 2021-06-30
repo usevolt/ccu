@@ -106,7 +106,8 @@ void init(dev_st* me) {
 
 	}
 
-	uv_gpio_init_input(AIN1_IO, PULL_DOWN_ENABLED);
+//	uv_gpio_init_input(AIN1_IO, PULL_DOWN_ENABLED);
+	uv_gpio_init_input(AIN1_IO, PULL_UP_ENABLED);
 	uv_gpio_init_input(AIN2_IO, PULL_DOWN_ENABLED);
 	this->impl2_req = 0;
 
@@ -246,7 +247,8 @@ void step(void* me) {
 		if (uv_gpio_get(AIN2_IO)) {
 			this->impl2_req = this->impl2_ain2_req;
 		}
-		else if (uv_gpio_get(AIN1_IO)) {
+//		AIN1 inverted for Anders winch
+		else if (!uv_gpio_get(AIN1_IO)) {
 			this->impl2_req = this->impl2_ain1_req;
 		}
 		else {
