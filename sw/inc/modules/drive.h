@@ -19,6 +19,9 @@
 #ifndef INC_MODULES_DRIVE_H_
 #define INC_MODULES_DRIVE_H_
 
+
+#define DRIVE_ONEWAY_PEDAL		1
+
 #include <uv_utilities.h>
 #include <uv_dual_solenoid_output.h>
 #include "input.h"
@@ -33,6 +36,12 @@ typedef struct {
 	} comp;
 } drive_conf_st;
 
+
+typedef enum {
+	DRIVE_DIR_FORWARD = 0,
+	DRIVE_DIR_BACKWARD
+} drive_dir_e;
+
 /// @brief: Resets the non-volatile settings to defaults
 void drive_conf_reset(drive_conf_st *this);
 
@@ -42,6 +51,8 @@ void drive_conf_reset(drive_conf_st *this);
 typedef struct {
 	// input module from the CAN-bus
 	input_st input;
+
+	drive_dir_e drive_dir;
 
 	// output for only 1st gear
 	uv_dual_solenoid_output_st out1;

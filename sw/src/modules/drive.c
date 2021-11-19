@@ -65,6 +65,7 @@ void drive_init(drive_st *this, drive_conf_st *conf_ptr) {
 	this->gear = CCU_GEAR_1;
 	this->d4wd_req = OUTPUT_STATE_OFF;
 	this->cabdir = CCU_CABDIR_FORWARD;
+	this->drive_dir = DRIVE_DIR_FORWARD;
 
 	if (this->conf->comp.b > 100 ||
 			this->conf->comp.b < -100) {
@@ -133,6 +134,23 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 
 	}
 
+#if DRIVE_ONEWAY_PEDAL
+	// get the drive direction request from the telescope input, only on one-dir pedal
+	int8_t drive_dir_req = input_get_request(&dev.telescope.input, &dev.telescope.conf->out_conf);
+	if (drive_dir_req > 0) {
+		this->drive_dir = (this->cabdir == CCU_CABDIR_FORWARD) ?
+				DRIVE_DIR_FORWARD : DRIVE_DIR_BACKWARD;
+	}
+	else if (drive_dir_req < 0) {
+		this->drive_dir = (this->cabdir == CCU_CABDIR_FORWARD) ?
+				DRIVE_DIR_BACKWARD : DRIVE_DIR_FORWARD;
+	}
+	else {
+
+	}
+#endif
+
+
 	// prevent driving when legs are down
 	if ((dev.hcu.left_foot_state == HCU_FOOT_DOWN) ||
 			(dev.hcu.right_foot_state == HCU_FOOT_DOWN)) {
@@ -160,6 +178,15 @@ void drive_step(drive_st *this, uint16_t step_ms) {
 		else {
 			req *= (this->cabdir == CCU_CABDIR_BACKWARD) ? -1 : 1;
 		}
+#if DRIVE_ONEWAY_PEDAL
+		// on oneway pedal the driving direction is determined by the drive_dir parameter
+		if (this->drive_dir == DRIVE_DIR_FORWARD) {
+			req = abs(req);
+		}
+		else {
+			req = -abs(req);
+		}
+#endif
 
 		// if soft request is active, drive the output to zero
 		if (this->disable_soft) {

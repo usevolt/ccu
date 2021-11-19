@@ -20,6 +20,7 @@
 
 
 #include "pedal.h"
+#include "drive.h"
 #include <uv_canopen.h>
 
 
@@ -118,6 +119,20 @@ void pedal_step(pedal_st *this) {
 		}
 
 	}
+}
+
+
+void pedal_set_lost(pedal_st *this, bool value) {
+#ifndef DRIVE_ONEWAY_PEDAL
+	if (value) {
+		this->state = PEDAL_STATE_LOST;
+	}
+	else {
+		if (this->state == PEDAL_STATE_LOST) {
+			this->state = PEDAL_STATE_OK;
+		}
+	}
+#endif
 }
 
 

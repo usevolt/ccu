@@ -51,15 +51,6 @@ static inline int8_t pedal_get_request(pedal_st *this) {
 }
 
 /// @brief: Sets the pedal state
-static inline void pedal_set_lost(pedal_st *this, bool value) {
-	if (value) {
-		this->state = PEDAL_STATE_LOST;
-	}
-	else {
-		if (this->state == PEDAL_STATE_LOST) {
-			this->state = PEDAL_STATE_OK;
-		}
-	}
-}
+void pedal_set_lost(pedal_st *this, bool value);
 
 #endif /* INC_PEDAL_H_ */
