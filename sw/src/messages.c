@@ -140,6 +140,13 @@ canopen_object_st obj_dict[] = {
 				.data_ptr = &this->drive_conf.comp
 		},
 		{
+				.main_index = CCU_DRIVE_DIR_INDEX,
+				.sub_index = CCU_DRIVE_DIR_SUBINDEX,
+				.type = CCU_DRIVE_DIR_TYPE,
+				.permissions = CCU_DRIVE_DIR_PERMISSIONS,
+				.data_ptr = &this->drive.drive_dir
+		},
+		{
 				.main_index = CCU_CABROT_REQ_INDEX,
 				.sub_index = CCU_CABROT_REQ_SUBINDEX,
 				.type = CCU_CABROT_REQ_TYPE,
@@ -348,6 +355,7 @@ void stat_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv
 void set_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 void can2_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
+void dir_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv);
 
 const uv_command_st terminal_commands[] = {
 		{
@@ -379,6 +387,12 @@ const uv_command_st terminal_commands[] = {
 				.instructions = "Sets the assembly bits.\n"
 						"Usage: ass <\"cabrot\"/\"telescope\"/\"gears\"/\"backsteer\"> <value>",
 				.callback = &ass_callb
+		},
+		{
+				.id = CMD_DIR,
+				.str = "dir",
+				.instructions = "Sets the drive dir",
+				.callback = &dir_callb
 		}
 };
 
@@ -592,6 +606,25 @@ void ass_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv)
 			this->assembly.telescope_installed,
 			this->assembly.gears_installed,
 			this->assembly.backsteer_installed);
+}
+
+void dir_callb(void* me, unsigned int cmd, unsigned int args, argument_st *argv) {
+	if (args) {
+		if (argv[0].type == ARG_INTEGER) {
+			this->drive.drive_dir = !!argv[0].number;
+		}
+		else {
+			if (strcmp(argv[0].str, "F") || strcmp(argv[0].str, "FORWARD")) {
+				this->drive.drive_dir = DRIVE_DIR_FORWARD;
+			}
+			else if (strcmp(argv[0].str, "B") || strcmp(argv[0].str, "BACKWARD")) {
+				this->drive.drive_dir = DRIVE_DIR_BACKWARD;
+			}
+			else {
+				printf("Unknown dir '%s'\n", argv[0].str);
+			}
+		}
+	}
 }
 
 
